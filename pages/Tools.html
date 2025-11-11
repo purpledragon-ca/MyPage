@@ -1,0 +1,35 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Contact · Your Name</title>
+<link rel="stylesheet" href="../css/theme.css"/>
+</head><body class="site">
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section" id="contact">
+    <div class="wrap grid" style="grid-template-columns:1.2fr .8fr">
+      <div class="panel" style="padding:20px">
+        <h2>Contact</h2>
+        <p class="muted">Open for collaboration:</p>
+        <p>
+          <a href="mailto:yourname@example.com">yourname@example.com</a> ·
+          <a href="https://x.com/yourid" target="_blank" rel="noopener">X</a> ·
+          <a href="https://www.linkedin.com/in/yourid" target="_blank" rel="noopener">LinkedIn</a> ·
+          <a href="https://www.instagram.com/yourid" target="_blank" rel="noopener">Instagram</a>
+        </p>
+        <form action="https://formspree.io/f/your-id" method="POST" class="grid" style="grid-template-columns:1fr 1fr">
+          <input class="panel" style="padding:12px" type="text" name="name" placeholder="Your name" required>
+          <input class="panel" style="padding:12px" type="email" name="email" placeholder="Your email" required>
+          <textarea class="panel" style="padding:12px; grid-column:1/3" rows="5" name="message" placeholder="Your message…" required></textarea>
+          <button class="btn" style="grid-column:1/3">Send</button>
+        </form>
+      </div>
+      <div class="panel" style="padding:20px">
+        <h3>Card / QR</h3>
+        <img src="../assets/card.svg" alt="Card or QR">
+      </div>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+  <script src="../js/include.js"></script>
+</body></html>

@@ -1,0 +1,70 @@
+:root{
+  --bg:#0b0717;
+  --panel:#120a24;
+  --ink:#e9e5ff;
+  --muted:#b8a9ff;
+  --primary:#7a3cff;
+  --primary-2:#c53bff;
+  --outline:#2a1b4b;
+  --radius:14px; --radius-sm:10px;
+  --maxw:1300px;
+  --glow:0 0 32px rgba(122,60,255,.35);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+html,body{background:var(--bg); color:var(--ink); font-family:ui-sans-serif,Inter,"PingFang SC","Microsoft YaHei",Arial; line-height:1.6; margin:0}
+*{box-sizing:border-box}
+a{color:var(--muted); text-decoration:none}
+a:hover{color:var(--primary-2)}
+img,video{max-width:100%; display:block}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+.section{padding:80px 0}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)); border:1px solid var(--outline); border-radius:var(--radius); box-shadow:var(--shadow)}
+.grid{display:grid; gap:22px}
+.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.1rem; border-radius:var(--radius-sm); background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:white; box-shadow:var(--glow); border:1px solid #5f33cc}
+.btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--outline)}
+.chip{display:inline-block; padding:.3rem .6rem; border:1px solid var(--outline); border-radius:999px; color:var(--muted); font-size:.85rem}
+hr.sep{border:none; height:1px; background:linear-gradient(90deg,transparent,var(--outline),transparent); margin:40px 0}
+.nav{position:sticky; top:0; backdrop-filter:blur(10px); background:rgba(11,7,23,.5); border-bottom:1px solid var(--outline); z-index:10}
+.nav .inner{display:flex; align-items:center; justify-content:space-between; height:64px}
+.brand{display:flex; align-items:center; gap:.7rem}
+.logo{width:28px;height:28px;border-radius:8px;background:radial-gradient(60% 60% at 50% 50%, var(--primary-2), var(--primary)); box-shadow:var(--glow)}
+.projects .grid{grid-template-columns: repeat(auto-fill, minmax(260px,1fr))}
+.card{position:relative; overflow:hidden; border-radius:var(--radius); border:1px solid var(--outline); background:var(--panel)}
+.card .thumb{aspect-ratio:16/10; background:#1a1230}
+.card .body{padding:16px}
+.card h3{margin:.2rem 0 .5rem 0; font-size:1.05rem}
+.card:hover{box-shadow:var(--glow); transform: translateY(-2px); transition:.2s}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.gallery .grid{grid-template-columns: repeat(auto-fill, minmax(180px,1fr))}
+@media (max-width:800px){ .about{grid-template-columns:1fr} }
+
+
+  
+  /* '------------------------------------------------' */
+  /* 增加可见链接效果 ------------------------------------------------ */
+  /* ——— noticeable links ——— */
+  a.link-cta{
+    position: relative;
+    color: #fff;                 /* 更亮 */
+    font-weight: 600;
+    text-decoration: none;       /* 关掉默认下划线，改用自定义 */
+    padding-bottom: 2px;
+  }
+  a.link-cta::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:2px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-2));
+    transform: scaleX(1);     /* 初始短线 */
+    transform-origin: left;
+    opacity:.85;
+    transition: transform .22s ease;
+  }
+  a.link-cta:hover::after{ transform: scaleX(1); }
+  
+  a.link-cta .icon{
+    display:inline-block; margin-left:.28em;
+    transition: transform .2s ease; 
+  }
+  a.link-cta:hover .icon{ transform: translateX(2px); }
+  
+  

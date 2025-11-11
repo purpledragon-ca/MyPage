@@ -1,0 +1,20 @@
+/* grid like gallery */
+.pgrid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px }
+@media (max-width:900px){ .pgrid{ grid-template-columns:repeat(2,1fr) } }
+@media (max-width:560px){ .pgrid{ grid-template-columns:1fr } }
+
+.pcard{ border-radius:var(--radius); border:1px solid var(--outline); background:var(--panel); overflow:hidden; transition:transform .2s, box-shadow .2s }
+.pcard:hover{ transform:translateY(-2px); box-shadow:var(--glow) }
+.pc-thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border-bottom:1px solid var(--outline) }
+.pc-body{ padding:16px }
+.pc-title{ margin:.2rem 0 .45rem; font-size:1.05rem }
+.pc-desc{ color:var(--muted); margin:0 0 .5rem }
+
+/* filters */
+.pfilters{ display:flex; flex-wrap:wrap; gap:12px 18px; align-items:center; margin:8px 0 18px }
+.pf-group{ display:flex; align-items:center; gap:10px }
+.pf-label{ color:var(--muted); font-size:.95rem }
+.pf-level{ cursor:pointer }
+.pf-level.is-active{ background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff; box-shadow:var(--glow); border-color:#5f33cc }
+.pf-skill-current{ color:#fff; font-weight:600 }
+.pf-clear-skill{ cursor:pointer }

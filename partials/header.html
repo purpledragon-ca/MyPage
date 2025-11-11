@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="../css/partials.css"/>
+
+<nav class="nav">
+  <div class="wrap inner">
+    <!-- 品牌：点击回到 Home -->
+    <a class="brand" href="./hero.html" aria-label="Home">
+      <img class="brand-logo" src="../assets/logo.jpg" alt="" aria-hidden="true">
+      <strong>PurpleDragon</strong>
+    </a>
+
+    <!-- 品牌与菜单之间的细分隔线 -->
+    <div class="nav-divider" aria-hidden="true"></div>
+
+    <!-- 菜单：相对路径 ./xxx.html -->
+    <div class="menu" role="navigation" aria-label="Primary">
+      <a href="./hero.html">Home</a>
+      <a href="./projects.html">Projects</a>
+      <a href="./skills.html">Skill&nbsp;Tree</a>
+      <a href="./writing.html">Blogs</a>
+      <a href="./contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // 滚动时给导航加阴影
+  (function(){
+    const nav = document.querySelector('.nav');
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 2);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+  })();
+</script>
