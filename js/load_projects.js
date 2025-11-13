@@ -47,11 +47,19 @@
         const fullUrl = new URL(path, window.location.href).href;
         console.log(`  Full URL: ${fullUrl}`);
         
-        const response = await fetch(path, { 
+        // Add timestamp to bypass cache
+        const timestamp = new Date().getTime();
+        const urlWithCacheBuster = path.includes('?') 
+          ? `${path}&_t=${timestamp}` 
+          : `${path}?_t=${timestamp}`;
+        
+        const response = await fetch(urlWithCacheBuster, { 
           cache: 'no-store',
+          method: 'GET',
           headers: {
             'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache'
+            'Pragma': 'no-cache',
+            'Expires': '0'
           }
         });
         console.log(`  Response status: ${response.status} ${response.statusText}`);
@@ -210,6 +218,11 @@
   } catch (error) {
     console.error('Failed to load projects:', error);
     grid.innerHTML = `<p class="muted">Failed to load projects: ${error.message}. Make sure to run <code>python build_projects_manifest.py</code> first.</p>`;
+  } finally {
+    // Clear loading flag
+    if (grid) {
+      grid.dataset.loading = 'false';
+    }
   }
 })();
 
