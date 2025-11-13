@@ -1,9 +1,43 @@
 {
   "generated": true,
-  "count": 2,
+  "count": 4,
   "projects": [
     {
+      "id": "laser_clading_system",
+      "title": "Vision-Based Planar Damage Segmentation & Laser Cladding Path Planning System",
+      "level": "Advanced",
+      "tags": [
+        "CV2",
+        "Python",
+        "SAM",
+        "RAPID",
+        "Calibration"
+      ],
+      "skills": "cv2,python,sam,rapid,calibration",
+      "cover": "assets/coverpage.jpg",
+      "description": "Built a vision-based system for 2D planar damage segmentation and automatic laser cladding path planning, from camera image to ABB/FANUC robot code.",
+      "repo": "",
+      "demo": "",
+      "pdf": ""
+    },
+    {
       "id": "minist-cnn",
+      "title": "MNIST-CNN",
+      "level": "junior",
+      "tags": [
+        "Python",
+        "CV",
+        "CNN"
+      ],
+      "skills": "python,cv,cnn",
+      "cover": "/assets/p1-cover.svg",
+      "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
+      "repo": "",
+      "demo": "",
+      "pdf": ""
+    },
+    {
+      "id": "minist-cnn copy",
       "title": "MNIST-CNN",
       "level": "junior",
       "tags": [
