@@ -337,17 +337,40 @@
         // Update button state
         window.Likes.updateLikeButton(btn, projectId);
         
+        // Listen for cloud data loaded event to update button
+        const updateHandler = () => {
+          window.Likes.updateLikeButton(btn, projectId);
+        };
+        window.addEventListener('cloudDataLoaded', updateHandler, { once: true });
+        
+        // Also listen for like changes
+        window.addEventListener('likeChanged', (e) => {
+          if (e.detail && e.detail.projectId === projectId) {
+            window.Likes.updateLikeButton(btn, projectId);
+          }
+        });
+        
         // Add click handler
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
           e.preventDefault();
           e.stopPropagation();
-          const newCount = window.Likes.toggleLike(projectId);
-          window.Likes.updateLikeButton(btn, projectId);
           
-          // Dispatch event for other pages to sync
-          window.dispatchEvent(new CustomEvent('likeChanged', {
-            detail: { projectId, count: newCount }
-          }));
+          // Disable button during update
+          btn.disabled = true;
+          
+          try {
+            const newCount = await window.Likes.toggleLike(projectId);
+            window.Likes.updateLikeButton(btn, projectId);
+            
+            // Dispatch event for other pages to sync
+            window.dispatchEvent(new CustomEvent('likeChanged', {
+              detail: { projectId, count: newCount }
+            }));
+          } catch (error) {
+            console.error('Failed to toggle like:', error);
+          } finally {
+            btn.disabled = false;
+          }
         });
       }
     

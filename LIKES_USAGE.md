@@ -8,11 +8,13 @@
 - 点赞数据只存在浏览器本地（localStorage）
 - 在其他电脑/设备上看不到点赞数
 - 数据无法在用户间共享
+- 页面加载时不显示已有的点赞数量
 
 ### 现在的功能 ✅
 - 点赞数据存储在 Firebase Firestore 云端
 - **所有设备实时同步**
 - 所有访客都能看到真实的点赞总数
+- **页面加载时自动从云端读取已有点赞数**
 - 自动本地缓存，离线也能使用
 - 防刷机制（每次只能 +1 或 -1）
 
@@ -65,7 +67,15 @@ git push origin main
 ```
 ✅ Firebase initialized successfully
 ✅ Firebase persistence enabled
+📥 Loading existing likes from cloud...
+✅ Loaded 2 projects' likes from cloud
 ```
+
+这表示：
+1. Firebase 初始化成功
+2. 本地缓存已启用
+3. **从云端加载了已有的点赞数据**
+4. 显示了加载的项目数量
 
 如果点赞后控制台显示：
 

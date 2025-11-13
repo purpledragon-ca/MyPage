@@ -11,6 +11,12 @@
     try {
       if (typeof firebase === 'undefined' || !window.firebaseConfig) {
         console.warn('Firebase not loaded, using localStorage only');
+        
+        // Dispatch event so UI can update with local data
+        window.dispatchEvent(new CustomEvent('cloudDataLoaded', {
+          detail: { count: 0, error: true, reason: 'Firebase SDK not loaded' }
+        }));
+        
         return false;
       }
       
@@ -37,6 +43,9 @@
       isFirebaseReady = true;
       console.log('✅ Firebase initialized successfully');
       
+      // Load existing cloud data first
+      await loadCloudData();
+      
       // Sync local data to cloud on first load
       await syncLocalToCloud();
       
@@ -46,7 +55,43 @@
       return true;
     } catch (error) {
       console.error('❌ Firebase initialization failed:', error);
+      
+      // Still dispatch event so UI can update with local data
+      window.dispatchEvent(new CustomEvent('cloudDataLoaded', {
+        detail: { count: 0, error: true }
+      }));
+      
       return false;
+    }
+  }
+  
+  // Load all existing cloud data on initialization
+  async function loadCloudData() {
+    if (!isFirebaseReady) return;
+    
+    try {
+      console.log('📥 Loading existing likes from cloud...');
+      const snapshot = await db.collection('likes').get();
+      
+      let loadedCount = 0;
+      snapshot.forEach((doc) => {
+        const projectId = doc.id;
+        const data = doc.data();
+        const count = data.count || 0;
+        
+        // Update local cache
+        updateLocalCount(projectId, count);
+        loadedCount++;
+      });
+      
+      console.log(`✅ Loaded ${loadedCount} projects' likes from cloud`);
+      
+      // Dispatch event to notify UI that cloud data is loaded
+      window.dispatchEvent(new CustomEvent('cloudDataLoaded', {
+        detail: { count: loadedCount }
+      }));
+    } catch (error) {
+      console.error('Failed to load cloud data:', error);
     }
   }
   
