@@ -1,6 +1,7 @@
 {
   "generated": true,
-  "count": 4,
+  "version": "20251113_093914",
+  "count": 5,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -19,41 +20,8 @@
       "order": 1,
       "repo": "",
       "demo": "",
-      "pdf": ""
-    },
-    {
-      "id": "minist-cnn",
-      "title": "MNIST-CNN",
-      "level": "junior",
-      "tags": [
-        "Python",
-        "CV",
-        "CNN"
-      ],
-      "skills": "python,cv,cnn",
-      "cover": "/assets/p1-cover.svg",
-      "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
-      "order": 11,
-      "repo": "",
-      "demo": "",
-      "pdf": ""
-    },
-    {
-      "id": "minist-cnn copy",
-      "title": "MNIST-CNN",
-      "level": "junior",
-      "tags": [
-        "Python",
-        "CV",
-        "CNN"
-      ],
-      "skills": "python,cv,cnn",
-      "cover": "/assets/p1-cover.svg",
-      "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
-      "order": 14,
-      "repo": "",
-      "demo": "",
-      "pdf": ""
+      "pdf": "",
+      "sop": ""
     },
     {
       "id": "so101-lift-cube",
@@ -68,10 +36,67 @@
       "skills": "isaaclab,isaacsim,rl,so101",
       "cover": "assets/coverpage.png",
       "description": "Trained an RL policy in IsaacLab (manage-based environment) for the SO101 gripper to grasp and lift a cube.",
-      "order": 999,
+      "order": 2,
       "repo": "",
       "demo": "",
-      "pdf": ""
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "april_tag_accuracy_test",
+      "title": "Delivery Robot AprilTag IR Localization",
+      "level": "mid",
+      "tags": [
+        "Robotics",
+        "AprilTag",
+        "Infrared",
+        "Localization"
+      ],
+      "skills": "robotics,apriltag,infrared,localization",
+      "cover": "assets/coverpage.png",
+      "description": "Pose accuracy test of a restaurant delivery robot based on AprilTag, with an **infrared-enhanced AprilTag perception stack** for robust localization under real-world lighting and clutter.",
+      "order": 25,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "moveit_isaacsim",
+      "title": "SO-ARM101 MoveIt in Isaac Sim",
+      "level": "junior",
+      "tags": [
+        "ROS2",
+        "MoveIt",
+        "IsaacSim",
+        "SO101"
+      ],
+      "skills": "ros2,moveit,isaacsim,so101",
+      "cover": "assets/coverpage.png",
+      "description": "Control the SO-ARM101 manipulator with MoveIt + ROS 2, and connect it to Isaac Sim via topic-based ros2_control.",
+      "order": 104,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "camera_lidar_calibration",
+      "title": "Camera 2D LiDAR Joint Calibration",
+      "level": "junior",
+      "tags": [
+        "CV",
+        "LiDAR",
+        "Calibration"
+      ],
+      "skills": "cv,lidar,calibration",
+      "cover": "assets/coverpage.png",
+      "description": "Reproduced a GitHub camera–LiDAR calibration method, adapted it to a camera + 2D LiDAR setup, and documented it as an internal SOP.",
+      "order": 105,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": "assets/SOPCamaserCalibraTool.docx"
     }
   ]
 }

@@ -97,6 +97,13 @@
     // Clear loading message
     grid.innerHTML = '';
 
+    // Debug: Log project order
+    console.log('📋 Project Order (from manifest):');
+    manifest.projects.forEach((p, idx) => {
+      console.log(`  ${idx + 1}. [order:${p.order || 999}] ${p.title}`);
+    });
+    console.log(`📦 Manifest version: ${manifest.version || 'unknown'}`);
+
     // Level mapping for display with emoji indicators
     const levelMap = {
       'junior': 'Beginner',

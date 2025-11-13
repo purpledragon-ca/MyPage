@@ -3,6 +3,7 @@ title: SO101 · Lift Cube (IsaacLab RL)
 level: Mid
 tags: [IsaacLab, IsaacSim, RL, SO101]
 cover: assets/coverpage.png
+order: 2 
 ---
 
 ## Overview

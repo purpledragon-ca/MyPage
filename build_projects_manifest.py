@@ -147,7 +147,8 @@ def scan_projects():
                 'order': order,
                 'repo': fm.get('repo', ''),
                 'demo': fm.get('demo', ''),
-                'pdf': fm.get('pdf', '')
+                'pdf': fm.get('pdf', ''),
+                'sop': fm.get('sop', '')
             }
             
             projects.append(project)
@@ -165,8 +166,11 @@ def main():
     # Sort projects by order field (lower number first), then by title
     projects.sort(key=lambda p: (p.get('order', 999), p['title']))
     
+    import datetime
+    
     manifest = {
         'generated': True,
+        'version': datetime.datetime.now().strftime('%Y%m%d_%H%M%S'),
         'count': len(projects),
         'projects': projects
     }
