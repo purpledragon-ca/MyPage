@@ -1,24 +1,32 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Writing · Your Name</title>
-<link rel="stylesheet" href="../css/theme.css"/>
-</head><body class="site">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Blog · Your Name</title>
+  <link rel="stylesheet" href="../css/theme.css"/>
+</head>
+<body class="site page-blog">
   <div data-include="../partials/header.html"></div>
 
-  <main class="section" id="writing">
+  <main class="section" id="blog">
     <div class="wrap">
-      <h2>Writing</h2>
-      <article class="post panel" style="padding:20px">
-        <h4>Post Title</h4>
-        <div class="meta" style="color:var(--muted);font-size:.9rem;margin-bottom:.6rem">2025-05-01 · tags: design, frontend</div>
-        <p>Intro paragraph or excerpt.</p>
-        <pre><code>// Sample code
-function hello(){ console.log('world') }
-</code></pre>
-      </article>
+      <h2 class="gallery-title"><span>Blog</span></h2>
+      <p class="gallery-note">Posts are loaded from <code>_posts/</code>. Use the search box to filter.</p>
+
+      <div style="display:flex;gap:12px;align-items:center;margin:8px 0 18px">
+        <input id="post-search" type="search" placeholder="Search posts…" autocomplete="off" class="panel" style="flex:1;padding:12px;border-radius:var(--radius);border:1px solid var(--outline);background:transparent;color:var(--ink)">
+        <button id="post-clear" class="btn ghost">Clear</button>
+      </div>
+
+      <section id="post-list" style="display:grid;gap:16px">
+        <p class="muted">Loading posts…</p>
+      </section>
     </div>
   </main>
 
   <div data-include="../partials/footer.html"></div>
   <script src="../js/include.js"></script>
-</body></html>
+  <script src="../js/load_posts.js"></script>
+</body>
+</html>

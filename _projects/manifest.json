@@ -1,5 +1,39 @@
 {
   "generated": true,
-  "count": 0,
-  "items": []
+  "count": 2,
+  "projects": [
+    {
+      "id": "minist-cnn",
+      "title": "MNIST-CNN",
+      "level": "junior",
+      "tags": [
+        "Python",
+        "CV",
+        "CNN"
+      ],
+      "skills": "python,cv,cnn",
+      "cover": "/assets/p1-cover.svg",
+      "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
+      "repo": "",
+      "demo": "",
+      "pdf": ""
+    },
+    {
+      "id": "so101-lift-cube",
+      "title": "SO101 · Lift Cube (IsaacLab RL)",
+      "level": "Mid",
+      "tags": [
+        "IsaacLab",
+        "IsaacSim",
+        "RL",
+        "SO101"
+      ],
+      "skills": "isaaclab,isaacsim,rl,so101",
+      "cover": "assets/coverpage.png",
+      "description": "Trained an RL policy in IsaacLab (manage-based environment) for the SO101 gripper to grasp and lift a cube.",
+      "repo": "",
+      "demo": "",
+      "pdf": ""
+    }
+  ]
 }

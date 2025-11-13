@@ -1,67 +1,55 @@
-<!doctype html><html lang="en"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Projects · Your Name</title>
+
+  <!-- Styles: shared theme + projects page -->
   <link rel="stylesheet" href="../css/theme.css"/>
   <link rel="stylesheet" href="../css/projects.css"/>
-  </head><body class="site page-projects">
-    <div data-include="../partials/header.html"></div>
-  
-    <main class="section" id="projects">
-      <div class="wrap">
-        <h2 class="gallery-title"><span>Projects</span></h2>
-        <p class="gallery-note">Filter by difficulty and skill.</p>
-  
-        <div class="pfilters">
-          <div class="pf-group">
-            <span class="pf-label">Level:</span>
-            <button class="chip pf-level is-active" data-level="all">All</button>
-            <button class="chip pf-level" data-level="junior">Beginner</button>
-            <button class="chip pf-level" data-level="mid">Mid</button>
-            <button class="chip pf-level" data-level="advanced">Advanced</button>
-          </div>
-          <div class="pf-group">
-            <span class="pf-label">Skill:</span>
-            <span class="pf-skill-current" data-skill="">— none —</span>
-            <button class="chip pf-clear-skill" hidden>Clear</button>
-          </div>
+</head>
+<body class="site page-projects">
+  <!-- Optional: header/footer injected via include.js -->
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section" id="projects">
+    <div class="wrap">
+      <h2 class="gallery-title"><span>Projects</span></h2>
+      <p class="gallery-note">Filter by difficulty and skill.（支持从 SkillTree 跳转携带 ?skill=）</p>
+
+      <!-- Filter controls -->
+      <div class="pfilters">
+        <div class="pf-group">
+          <span class="pf-label">Level:</span>
+          <button class="chip pf-level is-active" data-level="all">All</button>
+          <button class="chip pf-level" data-level="junior">Beginner</button>
+          <button class="chip pf-level" data-level="mid">Mid</button>
+          <button class="chip pf-level" data-level="advanced">Advanced</button>
         </div>
-  
-        <section class="pgrid" id="pgrid">
-          <!-- 示例卡片：复制修改 -->
-          <article class="pcard panel" data-level="junior" data-skills="python,opencv">
-            <a href="#" target="_blank" rel="noopener">
-              <img class="pc-thumb" src="../assets/p1-cover.svg" alt="Project cover" loading="lazy">
-            </a>
-            <div class="pc-body">
-              <h3 class="pc-title">Project One</h3>
-              <p class="pc-desc">What problem it solves, your contribution, and the outcome.</p>
-              <div class="tags"><span class="chip">Beginner</span><span class="chip">Python</span><span class="chip">OpenCV</span></div>
-            </div>
-          </article>
-  
-          <article class="pcard panel" data-level="mid" data-skills="ros2,slam,python">
-            <a href="#"><img class="pc-thumb" src="../assets/p1-cover.svg" alt="Project cover" loading="lazy"></a>
-            <div class="pc-body">
-              <h3 class="pc-title">Project Two</h3>
-              <p class="pc-desc">Short blurb of the project.</p>
-              <div class="tags"><span class="chip">Mid</span><span class="chip">ROS2</span><span class="chip">SLAM</span></div>
-            </div>
-          </article>
-  
-          <article class="pcard panel" data-level="advanced" data-skills="transformers,vision">
-            <a href="#"><img class="pc-thumb" src="../assets/p1-cover.svg" alt="Project cover" loading="lazy"></a>
-            <div class="pc-body">
-              <h3 class="pc-title">Project Three</h3>
-              <p class="pc-desc">Short blurb of the project.</p>
-              <div class="tags"><span class="chip">Advanced</span><span class="chip">Transformers</span><span class="chip">Vision</span></div>
-            </div>
-          </article>
-        </section>
+        <div class="pf-group">
+          <span class="pf-label">Skill:</span>
+          <span class="pf-skill-current" data-skill="">— none —</span>
+          <button class="chip pf-clear-skill" hidden>Clear</button>
+        </div>
       </div>
-    </main>
-  
-    <div data-include="../partials/footer.html"></div>
-    <script src="../js/include.js"></script>
-    <script src="../js/projects.js" defer></script>
-  </body></html>
-  
+
+      <!-- Card grid: populated dynamically -->
+      <section class="pgrid" id="pgrid">
+        <p class="muted">Loading projects...</p>
+      </section>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <!-- include.js loads header/footer (optional) -->
+  <script src="../js/include.js"></script>
+  <!-- Likes functionality -->
+  <script src="../js/likes.js"></script>
+  <!-- Load filtering logic first so it is ready to listen for events -->
+  <script src="../js/projects.js"></script>
+  <!-- Then load the project list script which dispatches events when ready -->
+  <script src="../js/load_projects.js"></script>
+</body>
+</html>

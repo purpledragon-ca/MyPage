@@ -18,3 +18,38 @@
 .pf-level.is-active{ background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff; box-shadow:var(--glow); border-color:#5f33cc }
 .pf-skill-current{ color:#fff; font-weight:600 }
 .pf-clear-skill{ cursor:pointer }
+
+/* Like button styles */
+.like-btn{ 
+  cursor: pointer; 
+  border: 1px solid var(--outline);
+  background: var(--panel);
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.8rem;
+}
+.like-btn:hover{ 
+  background: var(--panel);
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+.like-btn.liked{ 
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  border-color: #5f33cc;
+  color: #fff;
+}
+.like-btn .like-icon{ 
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.like-btn .like-count{
+  font-size: 0.9rem;
+  margin-left: 4px;
+  font-weight: 500;
+}
+.pcard .like-btn{ 
+  margin-top: 8px;
+  width: fit-content;
+}

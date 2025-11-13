@@ -1,39 +1,43 @@
-name: Deploy static site to Pages
+name: Build and Deploy
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-
-      # 可选：生成一个 .nojekyll，避免 Jekyll 处理
-      - name: Add .nojekyll
-        run: echo > .nojekyll
-
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      
+      - name: Build projects manifest
+        run: python build_projects_manifest.py
+      
+      - name: Build posts manifest
+        run: python build_posts_manifest.py
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 直接把仓库根目录当作站点根
-          path: .
-
+          path: '.'
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Project · Purple Dragon</title>
+  <link rel="stylesheet" href="../css/theme.css"/>
+  <link rel="stylesheet" href="../css/projects.css"/>
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <style>
+    .project-page { padding: 40px 0; }
+    .project-header { margin-bottom: 32px; }
+    .project-header h1 { margin: 0 0 8px 0; font-size: 2.5rem; font-weight: 600; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 24px; }
+    .project-cover { margin-bottom: 32px; border-radius: var(--radius); overflow: hidden; }
+    .project-cover img { width: 100%; display: block; }
+    .project-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    .project-actions a { display: inline-flex; align-items: center; }
+    .project-actions a[hidden] { display: none !important; }
+    .project-content { max-width: 900px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8; }
+    .project-content p { margin: 1em 0; font-size: 1.1rem; line-height: 1.8; }
+    .project-content ul, .project-content ol { margin: 1em 0; padding-left: 2em; font-size: 1.1rem; line-height: 1.8; }
+    .project-content li { margin: 0.5em 0; }
+    .project-content h2 { margin-top: 2em; margin-bottom: 1em; border-bottom: 1px solid var(--outline); padding-bottom: 0.5em; font-size: 1.75rem; font-weight: 600; }
+    .project-content h3 { margin-top: 1.5em; margin-bottom: 0.75em; font-size: 1.4rem; font-weight: 600; }
+    .project-content h4 { margin-top: 1.2em; margin-bottom: 0.6em; font-size: 1.2rem; font-weight: 600; }
+    .project-content blockquote { margin: 1.5em 0; padding-left: 1.5em; border-left: 3px solid var(--primary); color: var(--muted); font-style: italic; font-size: 1.1rem; }
+    .project-content pre { background: var(--panel); border: 1px solid var(--outline); border-radius: var(--radius-sm); padding: 20px; overflow-x: auto; font-size: 0.95rem; }
+    .project-content code { font-family: 'Courier New', monospace; font-size: 0.95rem; }
+    .project-content pre code { background: transparent; border: none; padding: 0; }
+    .project-content img { max-width: 100%; border-radius: var(--radius-sm); margin: 1.5em auto; display:block }
+    .project-content video { max-width: 100%; border-radius: var(--radius-sm); margin: 1.5em auto; display:block }
+    .toc { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; }
+    .toc-title { font-size: 1.5rem; font-weight: 600; color: var(--ink); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--outline); }
+    .toc a { display: block; padding: 8px 12px; color: var(--muted); text-decoration: none; border-radius: 4px; font-size: 0.95rem; transition: all 0.2s; }
+    .toc a:hover { background: var(--panel); color: var(--ink); }
+    .toc-wrapper { display: grid; grid-template-columns: 1fr 260px; gap: 40px; }
+    @media (max-width: 900px) {
+      .toc-wrapper { grid-template-columns: 1fr; }
+      .toc { position: static; max-height: none; }
+    }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body class="site">
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section project-page">
+    <div class="wrap">
+      <div class="project-header">
+        <h1 id="proj-title">Loading...</h1>
+        <div class="project-meta">
+          <span id="proj-level" class="chip"></span>
+          <div id="proj-tags"></div>
+        </div>
+        <div class="project-actions">
+          <a id="btn-demo" class="btn" href="#" hidden>Live Demo</a>
+          <a id="btn-repo" class="btn" href="#" hidden>Source Code</a>
+          <a id="btn-pdf" class="btn" href="#" hidden>Paper / PDF</a>
+          <button id="btn-like" class="btn like-btn" style="display: none;">
+            <span class="like-icon">🤍</span>
+            <span class="like-count"></span>
+          </button>
+        </div>
+        <figure id="proj-cover" class="project-cover" style="display: none;">
+          <img id="cover-img" src="" alt="Project cover">
+        </figure>
+      </div>
+
+      <div class="toc-wrapper">
+        <div class="project-content">
+          <div id="md-out">
+            <p class="muted">Loading project content...</p>
+          </div>
+        </div>
+        <nav class="toc" id="toc" aria-label="Table of Contents">
+          <div class="toc-title">Table of Contents</div>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <!-- Marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  <!-- Highlight.js for code syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="../js/include.js"></script>
+  <!-- Likes functionality -->
+  <script src="../js/likes.js"></script>
+
+  <script>
+    (async function(){
+      // ========== id -> /_projects/<id>/<id>.md ==========
+      const params = new URLSearchParams(location.search);
+      const idRaw = params.get('id') || 'minist-cnn';      // Read project ID from URL param
+      const id = idRaw.toLowerCase().trim();               // Normalize casing/whitespace
+      const basePath = `/_projects/${id}/`;                // Project root path
+      
+      // Smart lookup: try <id>.md first, then fall back to other markdown names
+      let mdURL = '';
+      let raw = '';
+      let found = false;
+      
+      // Step 1: attempt the canonical name <id>.md
+      mdURL = `${basePath}${id}.md`;
+      try {
+        const r = await fetch(mdURL, {cache:'no-store'});
+        if (r.ok) {
+          raw = await r.text();
+          found = true;
+        }
+      } catch (e) {
+        // Ignore errors and proceed to the next attempt
+      }
+      
+      // Step 2: fallback to common variants (handle naming typos)
+      if (!found) {
+        const variants = [
+          id.replace('minist', 'mnist'),
+          id.replace('mnist', 'minist'),
+          id.replace(/-cnn$/, ''),
+          id + '-cnn'
+        ];
+        for (const variant of variants) {
+          if (variant === id) continue; // Already attempted
+          mdURL = `${basePath}${variant}.md`;
+          try {
+            const r = await fetch(mdURL, {cache:'no-store'});
+            if (r.ok) {
+              raw = await r.text();
+              found = true;
+              break;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+      }
+      
+      if (!found) {
+        document.getElementById('md-out').innerHTML =
+          `<p class="muted">无法加载项目文件。请检查 <code>_projects/${id}/</code> 目录下是否存在 .md 文件。</p>`;
+        return;
+      }
+    
+      // Parse minimal front-matter
+      let fm = {}, body = raw;
+      const m = /^---\s*[\r\n]+([\s\S]*?)\r?\n---\s*[\r\n]+([\s\S]*)$/m.exec(raw);
+      if (m) {
+        const yaml = m[1]; body = m[2];
+        fm = parseYAML(yaml);
+      }
+    
+      // Render markdown body
+      const html = marked.parse(body, { mangle:false, headerIds:true, gfm:true });
+      const out = document.getElementById('md-out');
+      out.innerHTML = html;
+    
+      // Highlight code blocks
+      document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+    
+      // Fill header metadata via front-matter
+      setMeta(fm);
+    
+      // Setup like button
+      setupLikeButton(id);
+    
+      // Fix relative links/images inside the markdown body
+      rewriteRelativeLinks(out, basePath);
+    
+      // Build page table of contents
+      buildTOC();
+    
+      // ---------- Helper functions (same as previous version with minor tweaks) ----------
+      function setMeta(fm){
+        const title = fm.title || toTitle(id);
+        qs('#proj-title').textContent = title;
+    
+        const lv = (fm.level||'').toLowerCase();
+        const lvMap = { junior:'Beginner', mid:'Mid', advanced:'Advanced' };
+        if (fm.level) qs('#proj-level').textContent = lvMap[lv] || fm.level;
+        else qs('#proj-level').style.display = 'none';
+    
+        // tags
+        const tags = Array.isArray(fm.tags)? fm.tags : (typeof fm.tags==='string'? fm.tags.split(','):[]);
+        const tagsWrap = qs('#proj-tags'); tagsWrap.innerHTML = '';
+        for(const t of tags){
+          const s = document.createElement('span');
+          s.className = 'chip'; s.textContent = String(t).trim();
+          tagsWrap.appendChild(s);
+        }
+    
+        // cover: allow relative paths (auto prepend basePath)
+        const cover = fm.cover ? qualify(fm.cover, basePath) : null;
+        if (cover){
+          const fig = qs('#proj-cover'); const img = qs('#cover-img');
+          img.src = cover; img.alt = title + ' cover';
+          fig.style.display = '';
+        }
+    
+        setBtn('#btn-demo', fm.demo, 'Live Demo');
+        setBtn('#btn-repo', fm.repo, 'Source Code');
+        setBtn('#btn-pdf',  fm.pdf,  'Paper / PDF');
+      }
+    
+      function setBtn(sel, url, label){
+        const el = qs(sel);
+        if(!url || !url.trim()) {
+          el.hidden = true;
+          return;
+        }
+        el.href = qualify(url, basePath); // Support relative URLs too
+        el.textContent = label;
+        el.hidden = false;
+      }
+    
+      function buildTOC(){
+        const toc = qs('#toc'); 
+        const tocTitle = toc.querySelector('.toc-title');
+        toc.innerHTML = '';
+        if (tocTitle) toc.appendChild(tocTitle);
+        const hs = out.querySelectorAll('h2, h3');
+        if(!hs.length){ 
+          const span = document.createElement('span');
+          span.className = 'muted';
+          span.textContent = 'No headings';
+          toc.appendChild(span);
+          return; 
+        }
+        hs.forEach(h=>{
+          if(!h.id) h.id = h.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^\w\-]/g,'');
+          const a = document.createElement('a');
+          a.href = '#'+h.id; a.textContent = h.textContent;
+          a.style.paddingLeft = (h.tagName==='H3'?'20px':'0px');
+          toc.appendChild(a);
+        });
+      }
+    
+      // Prefix relative media/links with basePath
+      function rewriteRelativeLinks(scope, base){
+        // images
+        scope.querySelectorAll('img').forEach(img=>{
+          img.src = qualify(img.getAttribute('src'), base);
+        });
+        // videos (direct src)
+        scope.querySelectorAll('video').forEach(v=>{
+          const src = v.getAttribute('src');
+          if (src) v.src = qualify(src, base);
+          if (!v.hasAttribute('controls')) v.setAttribute('controls','');
+          v.setAttribute('playsinline','');
+        });
+        // <source> inside media elements
+        scope.querySelectorAll('source').forEach(s=>{
+          const src = s.getAttribute('src');
+          if (src) s.setAttribute('src', qualify(src, base));
+        });
+        // anchors
+        scope.querySelectorAll('a').forEach(a=>{
+          const href = a.getAttribute('href');
+          a.setAttribute('href', qualify(href, base));
+        });
+        // reload videos after updating sources
+        scope.querySelectorAll('video').forEach(v=>{ try{ v.load(); }catch(_){ } });
+      }
+    
+      // Qualify relative paths against basePath, keep HTTP/absolute untouched
+      function qualify(url, base){
+        if (!url) return url;
+        const s = String(url).trim();
+        if (/^(https?:)?\/\//i.test(s)) return s;  // Absolute or protocol-relative
+        if (s.startsWith('/')) return s;           // Site-root path
+        if (s.startsWith('#')) return s;           // Hash anchor
+        // Everything else is treated as relative: prepend basePath
+        return base + s.replace(/^.\//,'');
+      }
+    
+      function setupLikeButton(projectId){
+        const btn = qs('#btn-like');
+        if(!btn || !window.Likes) return;
+        
+        btn.style.display = '';
+        btn.setAttribute('data-project-id', projectId);
+        btn.setAttribute('aria-label', 'Like this project');
+        
+        // Update button state
+        window.Likes.updateLikeButton(btn, projectId);
+        
+        // Add click handler
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const newCount = window.Likes.toggleLike(projectId);
+          window.Likes.updateLikeButton(btn, projectId);
+          
+          // Dispatch event for other pages to sync
+          window.dispatchEvent(new CustomEvent('likeChanged', {
+            detail: { projectId, count: newCount }
+          }));
+        });
+      }
+    
+      function toTitle(s){ return String(s).replace(/[-_]/g,' ').replace(/\b\w/g,m=>m.toUpperCase()); }
+      function qs(sel){ return document.querySelector(sel); }
+    
+      // Minimal YAML parser: key: val / key: [a,b] / "quoted"
+      function parseYAML(y){
+        const obj = {};
+        y.split(/\r?\n/).forEach(line=>{
+          if(!line.trim() || line.trim().startsWith('#')) return;
+          const m = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(line);
+          if(!m) return;
+          const k = m[1]; let v = m[2].trim();
+          if (v.startsWith('[') && v.endsWith(']')){
+            v = v.slice(1,-1).split(',').map(s=>s.trim()).filter(Boolean);
+          } else if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))){
+            v = v.slice(1,-1);
+          }
+          obj[k] = v;
+        });
+        return obj;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -2,16 +2,16 @@
 
 <nav class="nav">
   <div class="wrap inner">
-    <!-- 品牌：点击回到 Home -->
+    <!-- Brand: clicking returns to Home -->
     <a class="brand" href="./hero.html" aria-label="Home">
       <img class="brand-logo" src="../assets/logo.jpg" alt="" aria-hidden="true">
       <strong>PurpleDragon</strong>
     </a>
 
-    <!-- 品牌与菜单之间的细分隔线 -->
+    <!-- Divider between brand and navigation menu -->
     <div class="nav-divider" aria-hidden="true"></div>
 
-    <!-- 菜单：相对路径 ./xxx.html -->
+    <!-- Menu: relative paths ./xxx.html -->
     <div class="menu" role="navigation" aria-label="Primary">
       <a href="./hero.html">Home</a>
       <a href="./projects.html">Projects</a>
@@ -23,7 +23,7 @@
 </nav>
 
 <script>
-  // 滚动时给导航加阴影
+  // Toggle shadow when page scrolls
   (function(){
     const nav = document.querySelector('.nav');
     const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 2);

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Post · Your Name</title>
+  <link rel="stylesheet" href="../css/theme.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <style>
+    .post-page { padding: 40px 0; }
+    .post-header { margin-bottom: 24px; }
+    .post-header h1 { margin: 0 0 8px 0; font-size: 2.2rem; font-weight: 600; }
+    .post-meta { color: var(--muted); font-size: .95rem; display:flex; gap:8px; flex-wrap:wrap; }
+    .post-content { max-width: 900px; margin: 0 auto; font-size: 1.08rem; line-height: 1.8; }
+    .post-content h2 { margin-top: 2em; margin-bottom: 1em; border-bottom: 1px solid var(--outline); padding-bottom: .5em; font-size: 1.6rem; }
+    .post-content h3 { margin-top: 1.5em; margin-bottom: .75em; font-size: 1.3rem; }
+    .post-content pre { background: var(--panel); border: 1px solid var(--outline); border-radius: var(--radius-sm); padding: 18px; overflow-x: auto; font-size: .95rem; }
+    .post-content code { font-family: 'Courier New', monospace; font-size: .95rem; }
+    .post-content img { max-width: 100%; border-radius: var(--radius-sm); margin: 1.2em auto; display:block }
+    .post-content video { max-width: 100%; border-radius: var(--radius-sm); margin: 1.2em auto; display:block }
+    .toc { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow: auto; }
+    .toc-title { font-size: 1.25rem; font-weight: 600; color: var(--ink); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--outline); }
+    .toc a { display:block; padding:6px 8px; color:var(--muted); border-radius:4px; text-decoration:none; font-size:.95rem }
+    .toc a:hover { background: var(--panel); color: var(--ink); }
+    .toc-wrapper { display:grid; grid-template-columns: 1fr 240px; gap: 32px }
+    @media (max-width: 900px){ .toc-wrapper { grid-template-columns: 1fr } .toc{ position: static; max-height: none } }
+  </style>
+</head>
+<body class="site">
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section post-page">
+    <div class="wrap">
+      <div class="post-header">
+        <h1 id="post-title">Loading…</h1>
+        <div class="post-meta">
+          <span id="post-date"></span>
+          <span id="post-tags"></span>
+        </div>
+      </div>
+
+      <div class="toc-wrapper">
+        <div class="post-content"><div id="md-out"><p class="muted">Loading content…</p></div></div>
+        <nav class="toc" id="toc" aria-label="Table of Contents">
+          <div class="toc-title">Table of Contents</div>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="../js/include.js"></script>
+  <script>
+  (async function(){
+    const params = new URLSearchParams(location.search);
+    const idRaw = params.get('id') || '';
+    const id = String(idRaw).toLowerCase().trim();
+    if(!id){ document.getElementById('md-out').innerHTML = '<p class="muted">Missing id.</p>'; return; }
+    const basePath = `/_posts/${id}/`;
+
+    // Fetch markdown <id>.md (fallback to any .md)
+    let raw = '';
+    let mdURL = `${basePath}${id}.md`;
+    try{
+      const r = await fetch(mdURL, { cache: 'no-store' });
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      raw = await r.text();
+    }catch(_){
+      // Fallback: try first .md in directory via known names
+      const tryNames = ['index','post','readme'];
+      let ok = false;
+      for(const n of tryNames){
+        try{
+          const u = `${basePath}${n}.md`;
+          const r = await fetch(u, { cache: 'no-store' });
+          if(r.ok){ raw = await r.text(); mdURL = u; ok = true; break; }
+        }catch(_){ }
+      }
+      if(!ok){
+        document.getElementById('md-out').innerHTML = `<p class="muted">Failed to load markdown for id: ${id}</p>`;
+        return;
+      }
+    }
+
+    // Parse front-matter
+    let fm = {}, body = raw;
+    const m = /^---\s*[\r\n]+([\s\S]*?)\r?\n---\s*[\r\n]+([\s\S]*)$/m.exec(raw);
+    if(m){
+      fm = parseYAML(m[1]);
+      body = m[2];
+    }
+
+    // Render body
+    const out = document.getElementById('md-out');
+    const html = marked.parse(body, { mangle:false, headerIds:true, gfm:true });
+    out.innerHTML = html;
+    document.querySelectorAll('pre code').forEach(el=>hljs.highlightElement(el));
+
+    // Header
+    const title = fm.title || id.replace(/[-_]/g,' ').replace(/\b\w/g, m=>m.toUpperCase());
+    document.getElementById('post-title').textContent = title;
+    const date = fm.date ? String(fm.date) : '';
+    document.getElementById('post-date').textContent = date;
+    const tags = Array.isArray(fm.tags) ? fm.tags : (fm.tags ? String(fm.tags).split(',') : []);
+    const tagsWrap = document.getElementById('post-tags');
+    tagsWrap.innerHTML = '';
+    tags.forEach(t=>{ const s=document.createElement('span'); s.className='chip'; s.textContent=String(t).trim(); tagsWrap.appendChild(s); });
+
+    // Fix relative links/images
+    rewriteRelativeLinks(out, basePath);
+
+    // TOC
+    buildTOC(out);
+
+    function buildTOC(scope){
+      const toc = document.getElementById('toc');
+      const titleEl = toc.querySelector('.toc-title');
+      toc.innerHTML = '';
+      if (titleEl) toc.appendChild(titleEl);
+      const hs = scope.querySelectorAll('h2, h3');
+      if(!hs.length){ toc.appendChild(Object.assign(document.createElement('span'),{className:'muted',textContent:'No headings'})); return; }
+      hs.forEach(h=>{
+        if(!h.id) h.id = h.textContent.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^\w\-]/g,'');
+        const a = document.createElement('a');
+        a.href = '#'+h.id; a.textContent = h.textContent; a.style.paddingLeft = (h.tagName==='H3'?'18px':'8px');
+        toc.appendChild(a);
+      });
+    }
+
+    function rewriteRelativeLinks(scope, base){
+      // images
+      scope.querySelectorAll('img').forEach(img=>{ img.src = qualify(img.getAttribute('src'), base); });
+      // videos (direct src)
+      scope.querySelectorAll('video').forEach(v=>{
+        const src = v.getAttribute('src');
+        if (src) v.src = qualify(src, base);
+        if (!v.hasAttribute('controls')) v.setAttribute('controls','');
+        v.setAttribute('playsinline','');
+      });
+      // sources inside media
+      scope.querySelectorAll('source').forEach(s=>{
+        const src = s.getAttribute('src');
+        if (src) s.setAttribute('src', qualify(src, base));
+      });
+      // anchors
+      scope.querySelectorAll('a').forEach(a=>{ const href=a.getAttribute('href'); a.setAttribute('href', qualify(href, base)); });
+      // reload
+      scope.querySelectorAll('video').forEach(v=>{ try{ v.load(); }catch(_){ } });
+    }
+
+    function qualify(url, base){
+      if(!url) return url;
+      const s = String(url).trim();
+      if (/^(https?:)?\/\//i.test(s)) return s;
+      if (s.startsWith('/')) return s;
+      if (s.startsWith('#')) return s;
+      return base + s.replace(/^\.\//,'');
+    }
+
+    function parseYAML(y){
+      const obj = {};
+      y.split(/\r?\n/).forEach(line=>{
+        if(!line.trim() || line.trim().startsWith('#')) return;
+        const m = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(line);
+        if(!m) return;
+        const k = m[1]; let v = m[2].trim();
+        if (v.startsWith('[') && v.endsWith(']')){
+          v = v.slice(1,-1).split(',').map(s=>s.trim()).filter(Boolean);
+        } else if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))){
+          v = v.slice(1,-1);
+        }
+        obj[k] = v;
+      });
+      return obj;
+    }
+  })();
+  </script>
+</body>
+</html>
