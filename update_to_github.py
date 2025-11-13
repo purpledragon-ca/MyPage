@@ -93,9 +93,23 @@ Examples:
     
     # Step 5: Git push
     print("\n[5/5] Pushing to GitHub...")
-    if not run_command(['git', 'push']):
-        print("Error: Failed to push to GitHub")
-        sys.exit(1)
+    push_success = run_command(['git', 'push'], check=False)
+    
+    if not push_success:
+        # Check if it's because upstream is not set
+        result = subprocess.run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], 
+                              capture_output=True, text=True)
+        current_branch = result.stdout.strip() if result.returncode == 0 else 'main'
+        
+        print(f"\nUpstream branch not set. Setting upstream to origin/{current_branch}...")
+        if run_command(['git', 'push', '--set-upstream', 'origin', current_branch]):
+            print("✓ Successfully set upstream and pushed!")
+        else:
+            print("Error: Failed to push to GitHub")
+            print("\nTroubleshooting:")
+            print("1. Check if remote 'origin' is set: git remote -v")
+            print("2. If not, set it: git remote add origin <your-repo-url>")
+            sys.exit(1)
     
     print("\n" + "="*60)
     print("✓ Successfully updated to GitHub!")
