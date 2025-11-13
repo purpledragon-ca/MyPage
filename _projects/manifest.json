@@ -5,7 +5,7 @@
     {
       "id": "laser_clading_system",
       "title": "Vision-Based Planar Damage Segmentation & Laser Cladding Path Planning System",
-      "level": "Advanced",
+      "level": "advanced",
       "tags": [
         "CV2",
         "Python",
@@ -16,6 +16,7 @@
       "skills": "cv2,python,sam,rapid,calibration",
       "cover": "assets/coverpage.jpg",
       "description": "Built a vision-based system for 2D planar damage segmentation and automatic laser cladding path planning, from camera image to ABB/FANUC robot code.",
+      "order": 1,
       "repo": "",
       "demo": "",
       "pdf": ""
@@ -32,6 +33,7 @@
       "skills": "python,cv,cnn",
       "cover": "/assets/p1-cover.svg",
       "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
+      "order": 11,
       "repo": "",
       "demo": "",
       "pdf": ""
@@ -48,6 +50,7 @@
       "skills": "python,cv,cnn",
       "cover": "/assets/p1-cover.svg",
       "description": "Baseline CNN for handwritten digits with training/eval scripts, metrics, and a confusion matrix.",
+      "order": 14,
       "repo": "",
       "demo": "",
       "pdf": ""
@@ -55,7 +58,7 @@
     {
       "id": "so101-lift-cube",
       "title": "SO101 · Lift Cube (IsaacLab RL)",
-      "level": "Mid",
+      "level": "mid",
       "tags": [
         "IsaacLab",
         "IsaacSim",
@@ -65,6 +68,7 @@
       "skills": "isaaclab,isaacsim,rl,so101",
       "cover": "assets/coverpage.png",
       "description": "Trained an RL policy in IsaacLab (manage-based environment) for the SO101 gripper to grasp and lift a cube.",
+      "order": 999,
       "repo": "",
       "demo": "",
       "pdf": ""

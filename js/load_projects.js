@@ -97,7 +97,7 @@
     // Clear loading message
     grid.innerHTML = '';
 
-    // Level mapping for display
+    // Level mapping for display with emoji indicators
     const levelMap = {
       'junior': 'Beginner',
       'mid': 'Mid',
@@ -116,6 +116,10 @@
       link.className = 'pcard-link';
       link.href = `./project_page.html?id=${project.id}`;
       link.setAttribute('aria-label', `Open ${project.title}`);
+
+      // Create image container with level badge
+      const thumbContainer = document.createElement('div');
+      thumbContainer.className = 'pc-thumb-container';
 
       // Cover image
       const img = document.createElement('img');
@@ -137,7 +141,15 @@
       }
       img.alt = `${project.title} cover`;
       img.loading = 'lazy';
-      link.appendChild(img);
+      thumbContainer.appendChild(img);
+
+      // Level badge in top-left corner
+      const levelBadge = document.createElement('span');
+      levelBadge.className = `chip level-badge level-${project.level}`;
+      levelBadge.textContent = levelMap[project.level] || project.level;
+      thumbContainer.appendChild(levelBadge);
+
+      link.appendChild(thumbContainer);
 
       // Card body
       const body = document.createElement('div');
@@ -155,15 +167,9 @@
       desc.textContent = project.description || '';
       body.appendChild(desc);
 
-      // Tags
+      // Tags (only skill tags, level is now in top-left corner)
       const tagsDiv = document.createElement('div');
       tagsDiv.className = 'tags';
-
-      // Level chip
-      const levelChip = document.createElement('span');
-      levelChip.className = 'chip';
-      levelChip.textContent = levelMap[project.level] || project.level;
-      tagsDiv.appendChild(levelChip);
 
       // Tag chips
       if (Array.isArray(project.tags)) {

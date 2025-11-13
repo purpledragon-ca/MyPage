@@ -3,6 +3,7 @@ title: MNIST-CNN
 level: junior
 tags: [Python, CV, CNN]
 cover: /assets/p1-cover.svg
+order: 14
 # repo: https://github.com/yourname/mnist-cnn
 # demo: https://your-demo-site.example.com
 # pdf:  https://arxiv.org/abs/1234.56789

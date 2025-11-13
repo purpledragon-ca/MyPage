@@ -116,14 +116,35 @@ def scan_projects():
             # Build skills string for data-skills attribute (lowercase, comma-separated)
             skills = ','.join([t.lower().strip() for t in tags])
             
+            # Normalize level to lowercase for consistency
+            level = fm['level'].lower().strip()
+            # Map common variants to standard values
+            level_map = {
+                'beginner': 'junior',
+                'junior': 'junior',
+                'mid': 'mid',
+                'middle': 'mid',
+                'advanced': 'advanced',
+                'expert': 'advanced'
+            }
+            level = level_map.get(level, level)
+            
+            # Get order field (lower number = higher priority, default 999)
+            order = fm.get('order', 999)
+            try:
+                order = int(order)
+            except (ValueError, TypeError):
+                order = 999
+            
             project = {
                 'id': project_dir.name,
                 'title': fm['title'],
-                'level': fm['level'],
+                'level': level,
                 'tags': tags,
                 'skills': skills,
                 'cover': fm['cover'],
                 'description': description,
+                'order': order,
                 'repo': fm.get('repo', ''),
                 'demo': fm.get('demo', ''),
                 'pdf': fm.get('pdf', '')
@@ -140,6 +161,9 @@ def scan_projects():
 
 def main():
     projects = scan_projects()
+    
+    # Sort projects by order field (lower number first), then by title
+    projects.sort(key=lambda p: (p.get('order', 999), p['title']))
     
     manifest = {
         'generated': True,

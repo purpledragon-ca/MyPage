@@ -3,6 +3,7 @@ title: Vision-Based Planar Damage Segmentation & Laser Cladding Path Planning Sy
 level: Advanced
 tags: [CV2, Python, SAM, RAPID, Calibration]
 cover: assets/coverpage.jpg
+order: 1
 ---
 
 ## Overview

@@ -5,10 +5,16 @@
 
 .pcard{ border-radius:var(--radius); border:1px solid var(--outline); background:var(--panel); overflow:hidden; transition:transform .2s, box-shadow .2s }
 .pcard:hover{ transform:translateY(-2px); box-shadow:var(--glow) }
-.pc-thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border-bottom:1px solid var(--outline) }
+.pc-thumb-container{ position:relative; width:100%; border-bottom:1px solid var(--outline) }
+.pc-thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block }
 .pc-body{ padding:16px }
 .pc-title{ margin:.2rem 0 .45rem; font-size:1.05rem }
 .pc-desc{ color:var(--muted); margin:0 0 .5rem }
+/* Level badge in top-left corner of project cards */
+.level-badge{ position:absolute; top:12px; left:12px; z-index:10; font-size:0.85rem; padding:0.35rem 0.75rem; font-weight:600; box-shadow:0 2px 8px rgba(0,0,0,0.3); border:none; border-radius:4px }
+.level-badge.level-junior{ background:#10b981 !important; color:#fff !important }
+.level-badge.level-mid{ background:#f59e0b !important; color:#fff !important }
+.level-badge.level-advanced{ background:#ef4444 !important; color:#fff !important }
 
 /* filters */
 .pfilters{ display:flex; flex-wrap:wrap; gap:12px 18px; align-items:center; margin:8px 0 18px }
@@ -16,6 +22,14 @@
 .pf-label{ color:var(--muted); font-size:.95rem }
 .pf-level{ cursor:pointer }
 .pf-level.is-active{ background:linear-gradient(135deg,var(--primary),var(--primary-2)); color:#fff; box-shadow:var(--glow); border-color:#5f33cc }
+/* Level color coding for filter buttons - always show color */
+.pf-level[data-level="junior"]{ background:#10b981 !important; color:#fff !important; border-color:#059669 !important }
+.pf-level[data-level="mid"]{ background:#f59e0b !important; color:#fff !important; border-color:#d97706 !important }
+.pf-level[data-level="advanced"]{ background:#ef4444 !important; color:#fff !important; border-color:#dc2626 !important }
+.pf-level[data-level="junior"].is-active{ box-shadow:0 0 12px rgba(16,185,129,0.5) !important; transform:scale(1.05) }
+.pf-level[data-level="mid"].is-active{ box-shadow:0 0 12px rgba(245,158,11,0.5) !important; transform:scale(1.05) }
+.pf-level[data-level="advanced"].is-active{ box-shadow:0 0 12px rgba(239,68,68,0.5) !important; transform:scale(1.05) }
+.pf-level[data-level="all"].is-active{ background:linear-gradient(135deg,var(--primary),var(--primary-2)) !important; color:#fff !important; box-shadow:var(--glow) !important; border-color:#5f33cc !important }
 .pf-skill-current{ color:#fff; font-weight:600 }
 .pf-clear-skill{ cursor:pointer }
 
