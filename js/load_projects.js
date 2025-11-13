@@ -4,31 +4,81 @@
   if (!grid) return;
 
   try {
-    // Load manifest.json - try multiple paths for GitHub Pages compatibility
-    const paths = [
-      '../_projects/manifest.json',  // From pages/ directory
-      './_projects/manifest.json',   // From root
-      '/_projects/manifest.json'     // Absolute path
-    ];
+    // Smart path detection based on current page location
+    const currentPath = window.location.pathname;
+    const basePath = currentPath.includes('/pages/') ? '../' : './';
+    
+    // Build list of paths to try, ordered by likelihood
+    const paths = [];
+    
+    // If we're in pages/, try relative path first
+    if (currentPath.includes('/pages/')) {
+      paths.push('../_projects/manifest.json');
+      paths.push('../../_projects/manifest.json');
+    }
+    
+    // Always try root-relative paths
+    paths.push('./_projects/manifest.json');
+    paths.push('_projects/manifest.json');
+    
+    // Try absolute paths
+    paths.push('/_projects/manifest.json');
+    
+    // Try with base URL
+    const baseUrl = window.location.origin;
+    paths.push(`${baseUrl}/_projects/manifest.json`);
+    
+    // Remove duplicates
+    const uniquePaths = [...new Set(paths)];
     
     let manifest = null;
     let lastError = null;
+    let successfulPath = null;
     
-    for (const path of paths) {
+    console.log('🔍 Attempting to load manifest.json...');
+    console.log('📍 Current location:', currentPath);
+    console.log('🌐 Base URL:', baseUrl);
+    console.log('📂 Base path:', basePath);
+    console.log('🛤️  Paths to try:', uniquePaths);
+    
+    for (const path of uniquePaths) {
       try {
-        const response = await fetch(path, { cache: 'no-store' });
+        console.log(`  Trying: ${path}`);
+        const fullUrl = new URL(path, window.location.href).href;
+        console.log(`  Full URL: ${fullUrl}`);
+        
+        const response = await fetch(path, { 
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache'
+          }
+        });
+        console.log(`  Response status: ${response.status} ${response.statusText}`);
+        
         if (response.ok) {
           manifest = await response.json();
+          successfulPath = path;
+          console.log(`✅ Successfully loaded from: ${path}`);
+          console.log(`📊 Found ${manifest.projects?.length || 0} projects`);
           break;
+        } else {
+          console.log(`  ❌ Failed: HTTP ${response.status}`);
+          // Don't break, continue to next path
         }
       } catch (e) {
         lastError = e;
+        console.log(`  ❌ Error: ${e.name} - ${e.message}`);
+        // Continue to next path
         continue;
       }
     }
     
     if (!manifest) {
-      throw new Error(`Failed to load manifest.json. Tried: ${paths.join(', ')}`);
+      const errorMsg = `Failed to load manifest.json. Tried: ${paths.join(', ')}. Current path: ${window.location.pathname}`;
+      console.error('❌', errorMsg);
+      console.error('Last error:', lastError);
+      throw new Error(errorMsg);
     }
 
     if (!manifest.projects || manifest.projects.length === 0) {

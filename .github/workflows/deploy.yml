@@ -33,6 +33,13 @@ jobs:
       - name: Build posts manifest
         run: python build_posts_manifest.py
       
+      - name: Verify manifests
+        run: |
+          echo "Checking manifest files..."
+          ls -la _projects/manifest.json || echo "Projects manifest not found"
+          ls -la _posts/manifest.json || echo "Posts manifest not found"
+          cat _projects/manifest.json | head -20
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
