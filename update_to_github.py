@@ -101,15 +101,56 @@ Examples:
                               capture_output=True, text=True)
         current_branch = result.stdout.strip() if result.returncode == 0 else 'main'
         
-        print(f"\nUpstream branch not set. Setting upstream to origin/{current_branch}...")
-        if run_command(['git', 'push', '--set-upstream', 'origin', current_branch]):
-            print("✓ Successfully set upstream and pushed!")
+        # Try to set upstream first
+        upstream_result = subprocess.run(['git', 'push', '--set-upstream', 'origin', current_branch], 
+                                        capture_output=True, text=True)
+        
+        if upstream_result.returncode != 0:
+            # Check if it's a rejection due to remote changes
+            if 'rejected' in upstream_result.stderr or 'Updates were rejected' in upstream_result.stderr:
+                print("\n⚠️  Remote repository has changes that you don't have locally.")
+                print("This is usually caused by GitHub Actions creating commits.")
+                print("\nAttempting to pull and merge remote changes...")
+                
+                # Try to pull with rebase (cleaner history)
+                pull_success = run_command(['git', 'pull', '--rebase', 'origin', current_branch], check=False)
+                
+                if pull_success:
+                    print("✓ Successfully pulled and rebased remote changes")
+                    # Try pushing again
+                    if run_command(['git', 'push', 'origin', current_branch]):
+                        print("✓ Successfully pushed to GitHub!")
+                    else:
+                        print("Error: Failed to push after pull")
+                        sys.exit(1)
+                else:
+                    # If rebase fails, try regular merge
+                    print("\nRebase failed, trying merge instead...")
+                    pull_success = run_command(['git', 'pull', 'origin', current_branch], check=False)
+                    
+                    if pull_success:
+                        print("✓ Successfully pulled and merged remote changes")
+                        # Try pushing again
+                        if run_command(['git', 'push', 'origin', current_branch]):
+                            print("✓ Successfully pushed to GitHub!")
+                        else:
+                            print("Error: Failed to push after pull")
+                            sys.exit(1)
+                    else:
+                        print("\n❌ Failed to pull remote changes automatically.")
+                        print("\nPlease resolve conflicts manually:")
+                        print("1. Run: git pull origin main")
+                        print("2. Resolve any conflicts if they exist")
+                        print("3. Run: git push origin main")
+                        sys.exit(1)
+            else:
+                print("Error: Failed to push to GitHub")
+                print("\nTroubleshooting:")
+                print("1. Check if remote 'origin' is set: git remote -v")
+                print("2. If not, set it: git remote add origin <your-repo-url>")
+                sys.exit(1)
         else:
-            print("Error: Failed to push to GitHub")
-            print("\nTroubleshooting:")
-            print("1. Check if remote 'origin' is set: git remote -v")
-            print("2. If not, set it: git remote add origin <your-repo-url>")
-            sys.exit(1)
+            print("✓ Successfully set upstream and pushed!")
     
     print("\n" + "="*60)
     print("✓ Successfully updated to GitHub!")
