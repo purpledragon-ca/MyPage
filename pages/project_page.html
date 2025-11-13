@@ -97,23 +97,54 @@
       const params = new URLSearchParams(location.search);
       const idRaw = params.get('id') || 'minist-cnn';      // Read project ID from URL param
       const id = idRaw.toLowerCase().trim();               // Normalize casing/whitespace
-      const basePath = `/_projects/${id}/`;                // Project root path
+      
+      // Smart path detection - try multiple base paths
+      const currentPath = window.location.pathname;
+      const basePaths = [];
+      
+      // If we're in pages/, try relative paths first
+      if (currentPath.includes('/pages/')) {
+        basePaths.push(`../_projects/${id}/`);
+        basePaths.push(`../../_projects/${id}/`);
+      }
+      
+      // Always try root-relative and absolute paths
+      basePaths.push(`./_projects/${id}/`);
+      basePaths.push(`_projects/${id}/`);
+      basePaths.push(`/_projects/${id}/`);
+      basePaths.push(`${window.location.origin}/_projects/${id}/`);
+      
+      // Remove duplicates
+      const uniqueBasePaths = [...new Set(basePaths)];
+      
+      console.log('🔍 Loading project:', id);
+      console.log('📍 Current location:', currentPath);
+      console.log('🛤️  Base paths to try:', uniqueBasePaths);
       
       // Smart lookup: try <id>.md first, then fall back to other markdown names
       let mdURL = '';
       let raw = '';
       let found = false;
+      let successfulBasePath = null;
       
-      // Step 1: attempt the canonical name <id>.md
-      mdURL = `${basePath}${id}.md`;
-      try {
-        const r = await fetch(mdURL, {cache:'no-store'});
-        if (r.ok) {
-          raw = await r.text();
-          found = true;
+      // Step 1: attempt the canonical name <id>.md for each base path
+      for (const basePath of uniqueBasePaths) {
+        mdURL = `${basePath}${id}.md`;
+        console.log(`  Trying: ${mdURL}`);
+        try {
+          const r = await fetch(mdURL, {cache:'no-store'});
+          console.log(`    Status: ${r.status} ${r.statusText}`);
+          if (r.ok) {
+            raw = await r.text();
+            found = true;
+            successfulBasePath = basePath;
+            console.log(`✅ Found at: ${mdURL}`);
+            break;
+          }
+        } catch (e) {
+          console.log(`    Error: ${e.message}`);
+          continue;
         }
-      } catch (e) {
-        // Ignore errors and proceed to the next attempt
       }
       
       // Step 2: fallback to common variants (handle naming typos)
@@ -124,21 +155,30 @@
           id.replace(/-cnn$/, ''),
           id + '-cnn'
         ];
-        for (const variant of variants) {
-          if (variant === id) continue; // Already attempted
-          mdURL = `${basePath}${variant}.md`;
-          try {
-            const r = await fetch(mdURL, {cache:'no-store'});
-            if (r.ok) {
-              raw = await r.text();
-              found = true;
-              break;
+        for (const basePath of uniqueBasePaths) {
+          for (const variant of variants) {
+            if (variant === id) continue; // Already attempted
+            mdURL = `${basePath}${variant}.md`;
+            console.log(`  Trying variant: ${mdURL}`);
+            try {
+              const r = await fetch(mdURL, {cache:'no-store'});
+              if (r.ok) {
+                raw = await r.text();
+                found = true;
+                successfulBasePath = basePath;
+                console.log(`✅ Found variant at: ${mdURL}`);
+                break;
+              }
+            } catch (e) {
+              continue;
             }
-          } catch (e) {
-            continue;
           }
+          if (found) break;
         }
       }
+      
+      // Use successful base path for all relative links
+      const basePath = successfulBasePath || `/_projects/${id}/`;
       
       if (!found) {
         document.getElementById('md-out').innerHTML =
@@ -169,6 +209,7 @@
       setupLikeButton(id);
     
       // Fix relative links/images inside the markdown body
+      // basePath is now the successful path found above
       rewriteRelativeLinks(out, basePath);
     
       // Build page table of contents
