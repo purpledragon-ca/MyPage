@@ -45,8 +45,17 @@
 
   <!-- include.js loads header/footer (optional) -->
   <script src="../js/include.js"></script>
-  <!-- Likes functionality -->
+  
+  <!-- Firebase SDK (v9 compat mode for easier migration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  
+  <!-- Firebase configuration -->
+  <script src="../js/firebase-config.js"></script>
+  
+  <!-- Likes functionality (now with Firebase support) -->
   <script src="../js/likes.js"></script>
+  
   <!-- Load filtering logic first so it is ready to listen for events -->
   <script src="../js/projects.js"></script>
   <!-- Then load the project list script which dispatches events when ready -->

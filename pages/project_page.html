@@ -88,7 +88,15 @@
   <!-- Highlight.js for code syntax highlighting -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="../js/include.js"></script>
-  <!-- Likes functionality -->
+  
+  <!-- Firebase SDK (v9 compat mode for easier migration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  
+  <!-- Firebase configuration -->
+  <script src="../js/firebase-config.js"></script>
+  
+  <!-- Likes functionality (now with Firebase support) -->
   <script src="../js/likes.js"></script>
 
   <script>
