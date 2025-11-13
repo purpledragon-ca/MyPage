@@ -4,12 +4,32 @@
   if (!grid) return;
 
   try {
-    // Load manifest.json
-    const response = await fetch('/_projects/manifest.json', { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+    // Load manifest.json - try multiple paths for GitHub Pages compatibility
+    const paths = [
+      '../_projects/manifest.json',  // From pages/ directory
+      './_projects/manifest.json',   // From root
+      '/_projects/manifest.json'     // Absolute path
+    ];
+    
+    let manifest = null;
+    let lastError = null;
+    
+    for (const path of paths) {
+      try {
+        const response = await fetch(path, { cache: 'no-store' });
+        if (response.ok) {
+          manifest = await response.json();
+          break;
+        }
+      } catch (e) {
+        lastError = e;
+        continue;
+      }
     }
-    const manifest = await response.json();
+    
+    if (!manifest) {
+      throw new Error(`Failed to load manifest.json. Tried: ${paths.join(', ')}`);
+    }
 
     if (!manifest.projects || manifest.projects.length === 0) {
       grid.innerHTML = '<p class="muted">No projects found. Run <code>python build_projects_manifest.py</code> to generate the manifest.</p>';

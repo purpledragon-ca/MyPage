@@ -54,9 +54,30 @@
 
   async function load(){
     try{
-      const res = await fetch('/_posts/manifest.json', { cache: 'no-store' });
-      if(!res.ok) throw new Error('HTTP '+res.status);
-      const data = await res.json();
+      // Try multiple paths for GitHub Pages compatibility
+      const paths = [
+        '../_posts/manifest.json',  // From pages/ directory
+        './_posts/manifest.json',   // From root
+        '/_posts/manifest.json'     // Absolute path
+      ];
+      
+      let data = null;
+      for (const path of paths) {
+        try {
+          const res = await fetch(path, { cache: 'no-store' });
+          if (res.ok) {
+            data = await res.json();
+            break;
+          }
+        } catch (e) {
+          continue;
+        }
+      }
+      
+      if (!data) {
+        throw new Error('Failed to load manifest.json from any path');
+      }
+      
       allPosts = Array.isArray(data.posts) ? data.posts : [];
       apply();
     }catch(err){
