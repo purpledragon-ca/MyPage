@@ -1,7 +1,7 @@
 ---
 title: Delivery Robot AprilTag IR Localization
 level: Mid
-tags: [Robotics, AprilTag, Infrared, Localization]
+tags: [ROS, AprilTag, Calibration, C++]
 cover: assets/coverpage.png
 order: 25
 # repo: https://github.com/yourname/apriltag-ir-localization

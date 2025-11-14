@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20251113_093914",
-  "count": 5,
+  "version": "20251113_235444",
+  "count": 6,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -31,9 +31,10 @@
         "IsaacLab",
         "IsaacSim",
         "RL",
-        "SO101"
+        "SO101",
+        "Python"
       ],
-      "skills": "isaaclab,isaacsim,rl,so101",
+      "skills": "isaaclab,isaacsim,rl,so101,python",
       "cover": "assets/coverpage.png",
       "description": "Trained an RL policy in IsaacLab (manage-based environment) for the SO101 gripper to grasp and lift a cube.",
       "order": 2,
@@ -47,15 +48,34 @@
       "title": "Delivery Robot AprilTag IR Localization",
       "level": "mid",
       "tags": [
-        "Robotics",
+        "ROS",
         "AprilTag",
-        "Infrared",
-        "Localization"
+        "Calibration",
+        "C++"
       ],
-      "skills": "robotics,apriltag,infrared,localization",
+      "skills": "ros,apriltag,calibration,c++",
       "cover": "assets/coverpage.png",
       "description": "Pose accuracy test of a restaurant delivery robot based on AprilTag, with an **infrared-enhanced AprilTag perception stack** for robust localization under real-world lighting and clutter.",
       "order": 25,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "visual-tactile sensor",
+      "title": "Visual-tactile sensor grasping",
+      "level": "junior",
+      "tags": [
+        "Grasping",
+        "ROS",
+        "CNN",
+        "Data Collect"
+      ],
+      "skills": "grasping,ros,cnn,data collect",
+      "cover": "assets/coverpage.png",
+      "description": "Combine single-image 6D pose estimation with **GelSight Mini** fingertip tactile sensing to detect slip, surface texture, and contact deformation for robust grasping.",
+      "order": 101,
       "repo": "",
       "demo": "",
       "pdf": "",
@@ -87,9 +107,10 @@
       "tags": [
         "CV",
         "LiDAR",
-        "Calibration"
+        "Calibration",
+        "ROS"
       ],
-      "skills": "cv,lidar,calibration",
+      "skills": "cv,lidar,calibration,ros",
       "cover": "assets/coverpage.png",
       "description": "Reproduced a GitHub camera–LiDAR calibration method, adapted it to a camera + 2D LiDAR setup, and documented it as an internal SOP.",
       "order": 105,

@@ -1,7 +1,7 @@
 ---
 title: Camera 2D LiDAR Joint Calibration
 level: junior
-tags: [CV, LiDAR, Calibration]
+tags: [CV, LiDAR, Calibration, ROS]
 cover: assets/coverpage.png
 order: 105
 sop: assets/SOPCamaserCalibraTool.docx
