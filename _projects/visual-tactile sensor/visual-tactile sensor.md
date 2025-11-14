@@ -1,6 +1,6 @@
 ---
 title: Visual-tactile sensor grasping
-level: junior
+level: Mid
 tags: [Grasping, ROS, CNN, Data Collect]
 cover: assets/coverpage.png
 order: 101

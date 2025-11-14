@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20251113_235444",
-  "count": 6,
+  "version": "20251114_124433",
+  "count": 7,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -65,7 +65,7 @@
     {
       "id": "visual-tactile sensor",
       "title": "Visual-tactile sensor grasping",
-      "level": "junior",
+      "level": "mid",
       "tags": [
         "Grasping",
         "ROS",
@@ -118,6 +118,22 @@
       "demo": "",
       "pdf": "",
       "sop": "assets/SOPCamaserCalibraTool.docx"
+    },
+    {
+      "id": "yolo-v8-mobile",
+      "title": "YOLOv8 Mobile Demo",
+      "level": "junior",
+      "tags": [
+        "YOLOv8"
+      ],
+      "skills": "yolov8",
+      "cover": "assets/coverpage.jpg",
+      "description": "A lightweight YOLOv8 object detection demo running in real time on a mobile device.",
+      "order": 300,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
     }
   ]
 }
