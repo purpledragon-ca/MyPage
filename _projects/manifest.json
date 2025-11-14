@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20251114_124433",
-  "count": 7,
+  "version": "20251114_145011",
+  "count": 8,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -76,6 +76,24 @@
       "cover": "assets/coverpage.png",
       "description": "Combine single-image 6D pose estimation with **GelSight Mini** fingertip tactile sensing to detect slip, surface texture, and contact deformation for robust grasping.",
       "order": 101,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "leg_tracker",
+      "title": "Human legs tracking with 2D LiDAR",
+      "level": "mid",
+      "tags": [
+        "ROS",
+        "LiDAR",
+        "ML"
+      ],
+      "skills": "ros,lidar,ml",
+      "cover": "assets/coverpage.png",
+      "description": "Pedestrian tracking and following on a mobile robot using a 2D LiDAR and the ROS leg_tracker pipeline.",
+      "order": 102,
       "repo": "",
       "demo": "",
       "pdf": "",
