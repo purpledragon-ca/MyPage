@@ -1,7 +1,7 @@
 ---
 title: 'Isaaclab Initialization'
 date: 2025-07-17
-permalink: /posts//isaaclab_initial
+permalink: /posts/isaaclab_initial
 tags:
   - isaaclab
   - ttl

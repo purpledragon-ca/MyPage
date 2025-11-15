@@ -1,13 +1,14 @@
 ---
 title: "Isaaclab: VScode development"
-date: 2025-07-23
+date: 2025-07-19
 permalink: /posts//isaaclab_vscode
 tags:
   - isaaclab
   - vscode
   - ttl
 ---
-发现vscode没有办法识别到库，查询文档后发现必须使用二进制安装isaacsim，特此记录安装过程，isaac-sim=4.50, isaaclab=2.0, Win11
+I found that VSCode could not recognize the Isaac Sim libraries. After checking the documentation, I learned that you must use the binary installation of Isaac Sim for proper development support. This post documents my installation steps (Isaac Sim 4.50, IsaacLab 2.0, Windows 11).
+
 ---
 
 Download isaac-sim
