@@ -1,35 +1,64 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Contact · Your Name</title>
-<link rel="stylesheet" href="../css/theme.css"/>
-</head><body class="site">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Tools · Zilong Zhao</title>
+  <link rel="stylesheet" href="../css/theme.css"/>
+  <style>
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 24px; }
+    .tool-card { background: var(--panel); border: 1px solid var(--outline); border-radius: var(--radius); padding: 24px; transition: all 0.3s; }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2); border-color: var(--primary); }
+    .tool-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .tool-title { font-size: 1.3rem; font-weight: 600; margin: 0 0 8px 0; color: var(--ink); }
+    .tool-desc { color: var(--muted); line-height: 1.6; margin-bottom: 16px; font-size: 0.95rem; }
+    .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tool-link { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: white; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.2s; }
+    .tool-link:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); }
+  </style>
+</head>
+<body class="site">
   <div data-include="../partials/header.html"></div>
 
-  <main class="section" id="contact">
-    <div class="wrap grid" style="grid-template-columns:1.2fr .8fr">
-      <div class="panel" style="padding:20px">
-        <h2>Contact</h2>
-        <p class="muted">Open for collaboration:</p>
-        <p>
-          <a href="mailto:yourname@example.com">yourname@example.com</a> ·
-          <a href="https://x.com/yourid" target="_blank" rel="noopener">X</a> ·
-          <a href="https://www.linkedin.com/in/yourid" target="_blank" rel="noopener">LinkedIn</a> ·
-          <a href="https://www.instagram.com/yourid" target="_blank" rel="noopener">Instagram</a>
-        </p>
-        <form action="https://formspree.io/f/your-id" method="POST" class="grid" style="grid-template-columns:1fr 1fr">
-          <input class="panel" style="padding:12px" type="text" name="name" placeholder="Your name" required>
-          <input class="panel" style="padding:12px" type="email" name="email" placeholder="Your email" required>
-          <textarea class="panel" style="padding:12px; grid-column:1/3" rows="5" name="message" placeholder="Your message…" required></textarea>
-          <button class="btn" style="grid-column:1/3">Send</button>
-        </form>
-      </div>
-      <div class="panel" style="padding:20px">
-        <h3>Card / QR</h3>
-        <img src="../assets/card.svg" alt="Card or QR">
+  <main class="section" id="tools">
+    <div class="wrap">
+      <h2 class="gallery-title"><span>Tools & Applications</span></h2>
+      <p class="muted" style="margin-bottom: 32px;">Useful tools and web applications I've built</p>
+      
+      <div class="tools-grid">
+        
+        <!-- Bank Statement Analyzer -->
+        <div class="tool-card">
+          <div class="tool-icon">💰</div>
+          <h3 class="tool-title">Bank Statement Analyzer</h3>
+          <p class="tool-desc">AI-powered bank statement analysis tool using Claude AI. Upload your PDF statements and get insights, categorization, and financial summaries.</p>
+          <div class="tool-tags">
+            <span class="chip">Streamlit</span>
+            <span class="chip">Claude AI</span>
+            <span class="chip">PDF</span>
+          </div>
+          <a href="https://bankstatementanalyzer-vuqysg8u5y69rdxxvpx4lx.streamlit.app/" target="_blank" rel="noopener" class="tool-link">Launch App →</a>
+        </div>
+
+        <!-- Add more tools here as needed -->
+        <!-- Example template:
+        <div class="tool-card">
+          <div class="tool-icon">🔧</div>
+          <h3 class="tool-title">Tool Name</h3>
+          <p class="tool-desc">Description of what this tool does.</p>
+          <div class="tool-tags">
+            <span class="chip">Tag1</span>
+            <span class="chip">Tag2</span>
+          </div>
+          <a href="https://your-tool-url.com" target="_blank" rel="noopener" class="tool-link">Launch App →</a>
+        </div>
+        -->
+        
       </div>
     </div>
   </main>
 
   <div data-include="../partials/footer.html"></div>
   <script src="../js/include.js"></script>
-</body></html>
+</body>
+</html>
