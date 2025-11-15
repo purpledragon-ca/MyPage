@@ -110,10 +110,13 @@
 
     head.setAttribute('role','button');
     head.setAttribute('tabindex','0');
-    head.setAttribute('aria-expanded','true');
+    head.setAttribute('aria-expanded','false');
 
     const childUL = document.createElement('ul');
     node.children.forEach(c=> childUL.appendChild(renderNode(c)));
+
+    // Default collapsed state
+    li.classList.add('collapsed');
 
     // Interaction: toggle collapse on click/keyboard
     function toggle(){

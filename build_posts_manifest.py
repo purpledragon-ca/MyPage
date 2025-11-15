@@ -63,6 +63,13 @@ def scan_posts():
         try:
             text = md_file.read_text(encoding='utf-8')
             fm, body = parse_front_matter(text)
+            
+            # Skip draft posts
+            draft_value = fm.get('draft', '')
+            if draft_value in ['true', 'True', True, 'yes', 'Yes', 1, '1']:
+                print(f"⏸️  Skipped (draft): {post_dir.name}")
+                continue
+            
             # Required fields
             required = ['title', 'date']
             missing = [k for k in required if k not in fm]

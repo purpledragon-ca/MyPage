@@ -41,63 +41,224 @@
     </div>
   </main>
   <script>
-    (function(){
-      const grid = document.getElementById('grid3');
-      const sentinel = document.getElementById('gallery-sentinel');
-      if(!grid || !sentinel) return;
+    (async function(){
+      // Wait for includes to be loaded
+      function waitForElement(id, maxAttempts = 50) {
+        return new Promise((resolve) => {
+          let attempts = 0;
+          const checkExist = setInterval(() => {
+            const element = document.getElementById(id);
+            if (element) {
+              clearInterval(checkExist);
+              resolve(element);
+            }
+            attempts++;
+            if (attempts >= maxAttempts) {
+              clearInterval(checkExist);
+              resolve(null);
+            }
+          }, 100); // Check every 100ms
+        });
+      }
+      
+      const grid = await waitForElement('grid3');
+      const sentinel = await waitForElement('gallery-sentinel');
+      
+      if(!grid || !sentinel) {
+        console.error('Gallery elements not found after waiting');
+        return;
+      }
+      
+      console.log('✅ Gallery elements found, starting to load...');
     
-      // TODO: Replace this with your real image list
-      const IMGS = [
-        {thumb:'../assets/g1-thumb.svg', large:'../assets/g1-large.svg', alt:'Work A'},
-        {thumb:'../assets/p1-cover.svg', large:'../assets/p1-cover.svg', alt:'Work B'},
-        {thumb:'../assets/g1-thumb.svg', large:'../assets/g1-large.svg', alt:'Work C'},
-        // ...add as many more entries as you like
-      ];
+      // Load projects from manifest.json
+      let IMGS = [];
+      
+      try {
+        // Try multiple paths
+        const paths = ['../_projects/manifest.json', './_projects/manifest.json', '_projects/manifest.json'];
+        let manifest = null;
+        
+        console.log('🔍 Trying to load manifest...');
+        console.log('📍 Current location:', window.location.href);
+        
+        for (const path of paths) {
+          try {
+            console.log(`  Attempting: ${path}`);
+            const response = await fetch(path + '?t=' + Date.now(), { cache: 'no-store' });
+            console.log(`  Response status: ${response.status}`);
+            if (response.ok) {
+              manifest = await response.json();
+              console.log('✅ Loaded manifest from:', path);
+              break;
+            }
+          } catch (e) {
+            console.log(`  Error: ${e.message}`);
+            continue;
+          }
+        }
+        
+        if (!manifest || !manifest.projects) {
+          throw new Error('Failed to load manifest');
+        }
+        
+        // Filter projects with valid image covers (png/jpg only)
+        const validProjects = manifest.projects.filter(p => {
+          const cover = p.cover || '';
+          return cover.match(/\.(png|jpg|jpeg)$/i);
+        });
+        
+        if (validProjects.length === 0) {
+          console.warn('No valid image projects found');
+          return;
+        }
+        
+        // Separate by level
+        const advanced = validProjects.filter(p => p.level === 'advanced');
+        const mid = validProjects.filter(p => p.level === 'mid');
+        const others = validProjects.filter(p => p.level === 'junior');
+        
+        // Build image list: ensure at least 1 advanced and 1 mid
+        const selectedProjects = [];
+        
+        // Add at least one advanced (if available)
+        if (advanced.length > 0) {
+          const randomAdv = advanced[Math.floor(Math.random() * advanced.length)];
+          selectedProjects.push(randomAdv);
+        }
+        
+        // Add at least one mid (if available)
+        if (mid.length > 0) {
+          const randomMid = mid[Math.floor(Math.random() * mid.length)];
+          selectedProjects.push(randomMid);
+        }
+        
+        // Add remaining projects randomly
+        const remaining = [...advanced, ...mid, ...others];
+        const shuffled = remaining.sort(() => Math.random() - 0.5);
+        
+        // Add more projects to reach a good gallery size (e.g., 12 total)
+        const targetCount = Math.min(12, validProjects.length);
+        while (selectedProjects.length < targetCount && shuffled.length > 0) {
+          const project = shuffled.pop();
+          if (!selectedProjects.find(p => p.id === project.id)) {
+            selectedProjects.push(project);
+          }
+        }
+        
+        // Convert to image format
+        IMGS = selectedProjects.map(p => {
+          const coverPath = p.cover.startsWith('/') 
+            ? p.cover 
+            : `../_projects/${p.id}/${p.cover.replace(/^\.\//, '')}`;
+          
+          return {
+            thumb: coverPath,
+            large: coverPath,
+            alt: p.title,
+            projectUrl: `./project_page.html?id=${p.id}`,
+            level: p.level
+          };
+        });
+        
+        console.log(`📸 Gallery: ${IMGS.length} projects loaded`);
+        console.log(`   Advanced: ${IMGS.filter(i => i.level === 'advanced').length}`);
+        console.log(`   Mid: ${IMGS.filter(i => i.level === 'mid').length}`);
+        console.log(`   Junior: ${IMGS.filter(i => i.level === 'junior').length}`);
+        
+      } catch (error) {
+        console.error('❌ Failed to load project images:', error);
+        // Show error message to user
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted);">
+            <p style="color: #ef4444;">⚠️ Failed to load projects</p>
+            <p style="font-size: 0.9rem;">Check console (F12) for details</p>
+            <p style="font-size: 0.85rem; margin-top: 10px;">Error: ${error.message}</p>
+          </div>
+        `;
+        return; // Don't continue if manifest failed to load
+      }
     
       let idx = 0;                 // Current load position
       const BATCH = 9;             // Load 9 images per batch (3 rows)
+      let isLoading = false;       // Prevent multiple simultaneous loads
+      let allLoaded = false;       // Track if all images are loaded
     
       function makeCard(item){
         const a = document.createElement('a');
         a.className = 'gcard panel';
-        a.href = item.large;
-        a.target = '_blank';
-        a.rel = 'noopener';
+        
+        // Link to project page instead of just image
+        if (item.projectUrl) {
+          a.href = item.projectUrl;
+        } else {
+          a.href = item.large;
+          a.target = '_blank';
+          a.rel = 'noopener';
+        }
+        
         const img = document.createElement('img');
         img.src = item.thumb;
         img.alt = item.alt || '';
         img.loading = 'lazy';
+        
         a.appendChild(img);
         return a;
       }
     
       function loadMore(){
-        // If we run out of items, loop through the list (or stop)
+        // Prevent loading if already loading or all loaded
+        if (isLoading || allLoaded || IMGS.length === 0) return;
+        
+        isLoading = true;
+        
+        // Clear existing placeholder cards on first load
+        if (idx === 0) {
+          grid.innerHTML = '';
+        }
+        
+        // Load images but don't exceed the total available
         let n = 0;
-        while (n < BATCH && IMGS.length){
-          const item = IMGS[idx % IMGS.length];
+        while (n < BATCH && idx < IMGS.length){
+          const item = IMGS[idx];
           grid.appendChild(makeCard(item));
           idx++; n++;
         }
+        
+        // Check if all images are loaded
+        if (idx >= IMGS.length) {
+          allLoaded = true;
+          console.log(`✅ All ${IMGS.length} projects loaded`);
+          // Hide sentinel since we're done
+          if (sentinel) sentinel.style.display = 'none';
+        }
+        
+        isLoading = false;
       }
     
       // Initial batch
       loadMore();
     
-      // Load more when sentinel enters the viewport
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) loadMore();
-        });
-      }, { rootMargin: '600px 0px' }); // Preload 600px before reaching sentinel
-      io.observe(sentinel);
-    
-      // Fallback: trigger when user scrolls near the bottom
-      window.addEventListener('scroll', () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
-          loadMore();
-        }
-      }, { passive: true });
+      // Only set up observers if we have more to load
+      if (IMGS.length > BATCH) {
+        // Load more when sentinel enters the viewport
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting && !allLoaded) loadMore();
+          });
+        }, { rootMargin: '600px 0px' });
+        io.observe(sentinel);
+      
+        // Fallback: trigger when user scrolls near the bottom
+        window.addEventListener('scroll', () => {
+          if (!allLoaded && window.innerHeight + window.scrollY >= document.body.offsetHeight - 200){
+            loadMore();
+          }
+        }, { passive: true });
+      } else {
+        // If we have fewer images than BATCH, just hide the sentinel
+        if (sentinel) sentinel.style.display = 'none';
+      }
     })();
     </script>
     

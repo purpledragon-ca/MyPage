@@ -97,10 +97,12 @@
     // Clear loading message
     grid.innerHTML = '';
 
-    // Debug: Log project order
+    // Debug: Log project order and image paths
     console.log('📋 Project Order (from manifest):');
+    console.log('📍 Current path:', window.location.pathname);
     manifest.projects.forEach((p, idx) => {
       console.log(`  ${idx + 1}. [order:${p.order || 999}] ${p.title}`);
+      console.log(`     Cover: ${p.cover}`);
     });
     console.log(`📦 Manifest version: ${manifest.version || 'unknown'}`);
 
@@ -131,21 +133,30 @@
       // Cover image
       const img = document.createElement('img');
       img.className = 'pc-thumb';
-      // Handle cover path: same logic as project_page.html
-      // If absolute path (starts with /) or protocol-relative, use as-is
-      // Otherwise, treat as relative to project directory
+      
+      // Smart path handling based on current location
+      const currentPath = window.location.pathname;
+      let imgSrc = '';
+      
       if (!project.cover) {
-        img.src = ''; // No cover image
+        imgSrc = ''; // No cover image
       } else if (/^(https?:)?\/\//i.test(project.cover)) {
         // Absolute URL or protocol-relative
-        img.src = project.cover;
+        imgSrc = project.cover;
       } else if (project.cover.startsWith('/')) {
-        // Site-root path
-        img.src = project.cover;
+        // Site-root absolute path - convert to relative
+        imgSrc = currentPath.includes('/pages/') 
+          ? `.${project.cover}`  // Add . prefix for pages/ directory
+          : project.cover;
       } else {
         // Relative path: prepend project directory path
-        img.src = `/_projects/${project.id}/${project.cover.replace(/^\.\//, '')}`;
+        const basePath = currentPath.includes('/pages/') ? '../' : './';
+        // Encode project ID to handle spaces and special characters
+        const encodedId = encodeURIComponent(project.id);
+        imgSrc = `${basePath}_projects/${encodedId}/${project.cover.replace(/^\.\//, '')}`;
       }
+      
+      img.src = imgSrc;
       img.alt = `${project.title} cover`;
       img.loading = 'lazy';
       thumbContainer.appendChild(img);

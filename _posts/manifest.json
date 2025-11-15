@@ -1,5 +1,78 @@
 {
   "generated": true,
-  "count": 0,
-  "posts": []
+  "count": 9,
+  "posts": [
+    {
+      "id": "2025-10-17-title-post",
+      "title": "Tune Isaac Sim Joint Parameters Step-by-Step (Damping, Stiffness, Max force)",
+      "date": "2025-10-17",
+      "tags": [],
+      "cover": "",
+      "excerpt": "Goal: make the **Observed Joint** follow the **Command Joint** as fast and smooth as a real robot — removing delay, ringing, and steady-state error."
+    },
+    {
+      "id": "2025-10-16-title-post",
+      "title": "Fixing “Please ensure that the prim has 'USD ArticulationRootAPI' applied” in IsaacLab",
+      "date": "2025-10-16",
+      "tags": [],
+      "cover": "",
+      "excerpt": "When loading a custom robot (e.g., `myarm_m750`) in **IsaacLab / Isaac Sim**, you may encounter the following error:"
+    },
+    {
+      "id": "2025-07-19-title-post",
+      "title": "Isaaclab: VScode development",
+      "date": "2025-07-23",
+      "tags": [],
+      "cover": "",
+      "excerpt": "发现vscode没有办法识别到库，查询文档后发现必须使用二进制安装isaacsim，特此记录安装过程，isaac-sim=4.50, isaaclab=2.0, Win11"
+    },
+    {
+      "id": "2025-07-22-title-post",
+      "title": "Isaaclab: How different 'name' works in xxx_env_cfg.py",
+      "date": "2025-07-23",
+      "tags": [],
+      "cover": "",
+      "excerpt": "This post explains the relationship between different name fields in xxx_env_cfg.py using the minimal amount of code to make the logic clear."
+    },
+    {
+      "id": "2025-07-17-title-post",
+      "title": "Isaaclab Initialization",
+      "date": "2025-07-17",
+      "tags": [],
+      "cover": "",
+      "excerpt": "After taking the isaaclab manage-based RL training, I have few understanding about the structure, here to share."
+    },
+    {
+      "id": "2025-07-16-title-post",
+      "title": "Isaaclab Courses Issue",
+      "date": "2025-07-16",
+      "tags": [],
+      "cover": "",
+      "excerpt": "This works well on isaac-lab version==v2.1.0!!!!!"
+    },
+    {
+      "id": "2025-07-15-title-post",
+      "title": "Isaaclab install for Windows",
+      "date": "2025-07-15",
+      "tags": [],
+      "cover": "",
+      "excerpt": "Following the instruction of install isaaclab, but got an error, fixed it by looking github issue."
+    },
+    {
+      "id": "2025-07-11-title-post",
+      "title": "Win11 Ros2 & isaacsim bridge",
+      "date": "2025-07-11",
+      "tags": [],
+      "cover": "",
+      "excerpt": "Installing ROS 2 natively on Windows 11 can be complex and error-prone due to compatibility and dependency issues."
+    },
+    {
+      "id": "2025-07-06-title-post",
+      "title": "Batch Script: Why My Nested For Loop Couldn’t Use Updated Variables — and How I Fixed It",
+      "date": "2025-07-06",
+      "tags": [],
+      "cover": "",
+      "excerpt": "Recently, I ran into a tricky problem while writing a batch script to back up folders. I needed to loop through a list of directories, set a variable like `Backup_DIR` inside that loop, and then use i..."
+    }
+  ]
 }

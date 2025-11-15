@@ -59,28 +59,52 @@
     const idRaw = params.get('id') || '';
     const id = String(idRaw).toLowerCase().trim();
     if(!id){ document.getElementById('md-out').innerHTML = '<p class="muted">Missing id.</p>'; return; }
-    const basePath = `/_posts/${id}/`;
+    
+    // Smart path detection based on current location
+    const currentPath = window.location.pathname;
+    const basePath = currentPath.includes('/pages/') ? `../_posts/${id}/` : `_posts/${id}/`;
+    
+    console.log('🔍 Loading post:', id);
+    console.log('📍 Current path:', currentPath);
+    console.log('📂 Base path:', basePath);
 
     // Fetch markdown <id>.md (fallback to any .md)
     let raw = '';
     let mdURL = `${basePath}${id}.md`;
+    console.log('  Trying:', mdURL);
+    
     try{
       const r = await fetch(mdURL, { cache: 'no-store' });
+      console.log('  Response:', r.status);
       if(!r.ok) throw new Error('HTTP '+r.status);
       raw = await r.text();
-    }catch(_){
+      console.log('✅ Loaded:', mdURL);
+    }catch(e){
+      console.log('  Failed:', e.message);
       // Fallback: try first .md in directory via known names
       const tryNames = ['index','post','readme'];
       let ok = false;
       for(const n of tryNames){
         try{
           const u = `${basePath}${n}.md`;
+          console.log('  Trying fallback:', u);
           const r = await fetch(u, { cache: 'no-store' });
-          if(r.ok){ raw = await r.text(); mdURL = u; ok = true; break; }
+          if(r.ok){ 
+            raw = await r.text(); 
+            mdURL = u; 
+            ok = true; 
+            console.log('✅ Loaded fallback:', u);
+            break; 
+          }
         }catch(_){ }
       }
       if(!ok){
-        document.getElementById('md-out').innerHTML = `<p class="muted">Failed to load markdown for id: ${id}</p>`;
+        console.error('❌ Failed to load any markdown file');
+        document.getElementById('md-out').innerHTML = `
+          <p class="muted">Failed to load markdown for id: ${id}</p>
+          <p class="muted" style="font-size:0.9rem;">Expected path: ${mdURL}</p>
+          <p class="muted" style="font-size:0.9rem;">Check console (F12) for details</p>
+        `;
         return;
       }
     }

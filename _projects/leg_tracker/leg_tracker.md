@@ -5,7 +5,7 @@ tags: [ROS, LiDAR, ML]
 cover: assets/coverpage.png
 order: 102
 ---
-> Pedestrian tracking and following on a mobile robot using a 2D LiDAR and the ROS leg_tracker pipeline.
+> Pedestrian tracking and avoid crashing on a mobile robot using a 2D LiDAR and the ROS leg_tracker pipeline.
 
 
 ## Overview
@@ -17,7 +17,7 @@ My main contributions are:
 
 - Adapting the leg tracking system to our own robot and LiDAR
 - Modifying clustering parameters and feature set for denser point clouds
-- Deploying the full pipeline (including Kalman filtering and inertial tracking) on our robot to achieve pedestrian following and obstacle avoidance
+- Deploying the full pipeline (including Kalman filtering and motion prediction tracking) on our robot to achieve pedestrian following and obstacle avoidance
 
 ---
 
@@ -35,6 +35,6 @@ My main contributions are:
 
 - Modified the feature combination used for leg classification.  
   The original code used only eight features; we adjusted this set to better separate human legs from noise and other obstacles with our data.
-- Kept the original Kalman filter and inertial tracking logic from the package, using it to maintain stable tracks even with temporary occlusions or measurement noise.
+- Kept the original Kalman filter and motion prediction tracking logic from the package, using it to maintain stable tracks even with temporary occlusions or measurement noise.
 
 With these modifications, we successfully ran leg tracking on our mobile robot and achieved reliable people detect and avoid crash test.

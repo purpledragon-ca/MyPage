@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "version": "20251114_145011",
+  "version": "20251115_002556",
   "count": 8,
   "projects": [
     {
@@ -92,7 +92,7 @@
       ],
       "skills": "ros,lidar,ml",
       "cover": "assets/coverpage.png",
-      "description": "Pedestrian tracking and following on a mobile robot using a 2D LiDAR and the ROS leg_tracker pipeline.",
+      "description": "Pedestrian tracking and avoid crashing on a mobile robot using a 2D LiDAR and the ROS leg_tracker pipeline.",
       "order": 102,
       "repo": "",
       "demo": "",
