@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20251115_020114",
-  "count": 8,
+  "version": "20251117_052158",
+  "count": 10,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -57,6 +57,22 @@
       "cover": "assets/coverpage.png",
       "description": "Pose accuracy test of a restaurant delivery robot based on AprilTag, with an **infrared-enhanced AprilTag perception stack** for robust localization under real-world lighting and clutter.",
       "order": 25,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "amainghand_ros2",
+      "title": "Keyboard Control AmazingHand Use ROS2",
+      "level": "junior",
+      "tags": [
+        "ROS2"
+      ],
+      "skills": "ros2",
+      "cover": "assets/coverpage.png",
+      "description": "A ROS2 package that mirrors the original `AmazingHand_Demo.py` gestures and exposes. Allow keyboard control.",
+      "order": 100,
       "repo": "",
       "demo": "",
       "pdf": "",
@@ -148,6 +164,23 @@
       "cover": "assets/coverpage.jpg",
       "description": "A lightweight YOLOv8 object detection demo running in real time on a mobile device.",
       "order": 300,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "so101_teleoperation",
+      "title": "SO101 teleoperation",
+      "level": "junior",
+      "tags": [
+        "SO101",
+        "teleoperation"
+      ],
+      "skills": "so101,teleoperation",
+      "cover": "assets/coverpage.jpg",
+      "description": "Using SO100 teleoperate SO101 ARM.",
+      "order": 305,
       "repo": "",
       "demo": "",
       "pdf": "",
