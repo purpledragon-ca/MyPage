@@ -3,7 +3,7 @@ title: SO101 teleoperation
 level: junior
 tags: [SO101, teleoperation]
 cover: assets/coverpage.jpg
-order: 305
+order: 201
 ---
 > Using SO100 teleoperate SO101 ARM.
 

@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "version": "20251117_052158",
+  "version": "20251119_200750",
   "count": 10,
   "projects": [
     {
@@ -154,22 +154,6 @@
       "sop": "assets/SOPCamaserCalibraTool.docx"
     },
     {
-      "id": "yolo-v8-mobile",
-      "title": "YOLOv8 Mobile Demo",
-      "level": "junior",
-      "tags": [
-        "YOLOv8"
-      ],
-      "skills": "yolov8",
-      "cover": "assets/coverpage.jpg",
-      "description": "A lightweight YOLOv8 object detection demo running in real time on a mobile device.",
-      "order": 300,
-      "repo": "",
-      "demo": "",
-      "pdf": "",
-      "sop": ""
-    },
-    {
       "id": "so101_teleoperation",
       "title": "SO101 teleoperation",
       "level": "junior",
@@ -180,6 +164,22 @@
       "skills": "so101,teleoperation",
       "cover": "assets/coverpage.jpg",
       "description": "Using SO100 teleoperate SO101 ARM.",
+      "order": 201,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "yolo-v8-mobile",
+      "title": "YOLOv8 Mobile Demo",
+      "level": "junior",
+      "tags": [
+        "YOLOv8"
+      ],
+      "skills": "yolov8",
+      "cover": "assets/coverpage.jpg",
+      "description": "A lightweight YOLOv8 object detection demo running in real time on a mobile device.",
       "order": 305,
       "repo": "",
       "demo": "",

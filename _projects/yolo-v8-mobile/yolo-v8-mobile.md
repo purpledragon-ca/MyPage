@@ -3,7 +3,7 @@ title: YOLOv8 Mobile Demo
 level: junior
 tags: [YOLOv8]
 cover: assets/coverpage.jpg
-order: 300
+order: 305
 ---
 > A lightweight YOLOv8 object detection demo running in real time on a mobile device.
 
