@@ -7,10 +7,158 @@ const countdownRefs = {
 };
 
 const galleryImages = [
+  // Our Special Moments Together
+
+
+
+
+
   {
-    src: "../assets/_wedding/gallary/wed.png",
-    alt: "Captured memory from our journey together",
-    caption: "A favorite moment where laughter and love filled the frame.",
+    src: "../assets/_wedding/gallary/us_2024_04_15_arrive_mission.jpg",
+    alt: "First day at Mission",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2024_04_15_Jusper.jpg",
+    alt: "At Jasper",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025-3-15-Alberta.jpg",
+    alt: "Alberta adventure",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_04_14_WestGarnue.jpg",
+    alt: "West Garnue",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_BC_Park.jpg",
+    alt: "BC Park",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2024-12-25-Hilton.jpg",
+    alt: "Christmas at Hilton",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2024-12-25-Hilton_2.jpg",
+    alt: "Christmas together",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_mission.jpg",
+    alt: "At Mission",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_mission_2.jpg",
+    alt: "Mission memories",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_mission_hospital.jpg",
+    alt: "Mission Hospital",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_mission_hospital_2.jpg",
+    alt: "Mission Hospital moments",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_mission_hospital_3.jpg",
+    alt: "Mission Hospital memories",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_starbucks.jpg",
+    alt: "Coffee time",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/us_2025_0929_MissionLeaving.jpg",
+    alt: "New beginnings",
+    caption: "",
+    position: "center",
+  },
+  
+  // Friends and Family
+  {
+    src: "../assets/_wedding/gallary/all_2024-09_Hi.jpg",
+    alt: "With friends",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/all_2024-12-21_Zhuoyang.jpg",
+    alt: "Face masks with friends",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/all_2024-12-25-Dachuan.jpg",
+    alt: "Christmas with Dachuan",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/all_2024-12-25-Lijing.jpg",
+    alt: "Christmas with Lijing",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/all_2025_Chenxin.jpg",
+    alt: "With Chenxin",
+    caption: "",
+    position: "center",
+  },
+  
+  // Professional Photos
+  {
+    src: "../assets/_wedding/gallary/DSC02060.png",
+    alt: "Professional photo 1",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/DSC02062.png",
+    alt: "Professional photo 2",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/DSC02063.png",
+    alt: "Professional photo 3",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/DSC02070.png",
+    alt: "Professional photo 4",
+    caption: "",
+    position: "center",
+  },
+  {
+    src: "../assets/_wedding/gallary/DSC02073.png",
+    alt: "Professional photo 5",
+    caption: "",
     position: "center",
   },
 ];
