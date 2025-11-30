@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20251123_095248",
-  "count": 10,
+  "version": "20251129_221444",
+  "count": 11,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -57,6 +57,23 @@
       "cover": "assets/coverpage.png",
       "description": "Pose accuracy test of a restaurant delivery robot based on AprilTag, with an **infrared-enhanced AprilTag perception stack** for robust localization under real-world lighting and clutter.",
       "order": 25,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": ""
+    },
+    {
+      "id": "image2usd",
+      "title": "image2usd",
+      "level": "mid",
+      "tags": [
+        "AI",
+        "Isaacsim"
+      ],
+      "skills": "ai,isaacsim",
+      "cover": "assets/usd_in_isaac.png",
+      "description": "Convert 2D images into 3D USD assets which could directly used for Isaac Sim.",
+      "order": 51,
       "repo": "",
       "demo": "",
       "pdf": "",
