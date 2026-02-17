@@ -8,7 +8,9 @@
       "date": "2025-10-17",
       "tags": [],
       "cover": "",
-      "excerpt": "Goal: make the **Observed Joint** follow the **Command Joint** as fast and smooth as a real robot — removing delay, ringing, and steady-state error."
+      "excerpt": "Goal: make the **Observed Joint** follow the **Command Joint** as fast and smooth as a real robot — removing delay, ringing, and steady-state error.",
+      "title_zh": "Isaac Sim 关节参数逐步调参（阻尼、刚度、最大力）",
+      "excerpt_zh": "目标：让 **观测关节** 像真实机器人一样快速、平滑地跟随 **指令关节**，消除延迟、振铃和稳态误差。"
     },
     {
       "id": "2025-10-16-title-post",
@@ -16,7 +18,9 @@
       "date": "2025-10-16",
       "tags": [],
       "cover": "",
-      "excerpt": "When loading a custom robot (e.g., `myarm_m750`) in **IsaacLab / Isaac Sim**, you may encounter the following error:"
+      "excerpt": "When loading a custom robot (e.g., `myarm_m750`) in **IsaacLab / Isaac Sim**, you may encounter the following error:",
+      "title_zh": "Isaac Lab 中修复 “Please ensure that the prim has 'USD ArticulationRootAPI' applied”",
+      "excerpt_zh": "在 **Isaac Lab / Isaac Sim** 中加载自定义机器人（例如 `myarm_m750`）时，可能会遇到以下错误："
     },
     {
       "id": "2025-07-22-title-post",
@@ -24,7 +28,9 @@
       "date": "2025-07-23",
       "tags": [],
       "cover": "",
-      "excerpt": "This post explains the relationship between different name fields in xxx_env_cfg.py using the minimal amount of code to make the logic clear."
+      "excerpt": "This post explains the relationship between different name fields in xxx_env_cfg.py using the minimal amount of code to make the logic clear.",
+      "title_zh": "Isaac Lab：xxx_env_cfg.py 中不同 'name' 的用法",
+      "excerpt_zh": "本文用尽量少的代码说明 xxx_env_cfg.py 里各 name 字段之间的关系，把逻辑讲清楚。"
     },
     {
       "id": "2025-07-19-title-post",
@@ -32,7 +38,9 @@
       "date": "2025-07-19",
       "tags": [],
       "cover": "",
-      "excerpt": "I found that VSCode could not recognize the Isaac Sim libraries. After checking the documentation, I learned that you must use the binary installation of Isaac Sim for proper development support. This..."
+      "excerpt": "I found that VSCode could not recognize the Isaac Sim libraries. After checking the documentation, I learned that you must use the binary installation of Isaac Sim for proper development support. This...",
+      "title_zh": "Isaac Lab：VSCode 开发环境",
+      "excerpt_zh": "我发现 VSCode 无法识别 Isaac Sim 的库。查阅文档后得知，必须使用 Isaac Sim 的二进制安装才能获得完整的开发支持。本文记录我的安装步骤（Isaac Sim 4.50，Isaac Lab 2.0，Windows 11）。"
     },
     {
       "id": "2025-07-17-title-post",
@@ -40,7 +48,9 @@
       "date": "2025-07-17",
       "tags": [],
       "cover": "",
-      "excerpt": "After taking the isaaclab manage-based RL training, I have few understanding about the structure, here to share."
+      "excerpt": "After taking the isaaclab manage-based RL training, I have few understanding about the structure, here to share.",
+      "title_zh": "Isaac Lab 项目初始化",
+      "excerpt_zh": "在接触 isaaclab 基于 manager 的 RL 训练后，对整体结构有了一些理解，在此记录分享。"
     },
     {
       "id": "2025-07-16-title-post",
@@ -48,7 +58,9 @@
       "date": "2025-07-16",
       "tags": [],
       "cover": "",
-      "excerpt": "This works well on isaac-lab version==v2.1.0!!!!!"
+      "excerpt": "This works well on isaac-lab version==v2.1.0!!!!!",
+      "title_zh": "Isaac Lab 课程相关问题",
+      "excerpt_zh": "在 isaac-lab 版本 == v2.1.0 下可正常运行。"
     },
     {
       "id": "2025-07-15-title-post",
@@ -56,7 +68,9 @@
       "date": "2025-07-15",
       "tags": [],
       "cover": "",
-      "excerpt": "Following the instruction of install isaaclab, but got an error, fixed it by looking github issue."
+      "excerpt": "Following the instruction of install isaaclab, but got an error, fixed it by looking github issue.",
+      "title_zh": "Windows 下安装 Isaac Lab",
+      "excerpt_zh": "按官方文档安装 isaaclab 时遇到报错，通过查阅 GitHub issue 解决。"
     },
     {
       "id": "2025-07-11-title-post",
@@ -64,7 +78,9 @@
       "date": "2025-07-11",
       "tags": [],
       "cover": "",
-      "excerpt": "Installing ROS 2 natively on Windows 11 can be complex and error-prone due to compatibility and dependency issues."
+      "excerpt": "Installing ROS 2 natively on Windows 11 can be complex and error-prone due to compatibility and dependency issues.",
+      "title_zh": "Win11 下 ROS2 与 Isaac Sim 桥接",
+      "excerpt_zh": "在 Windows 11 上原生安装 ROS 2 会因兼容性和依赖问题变得复杂且容易出错。"
     },
     {
       "id": "2025-07-06-title-post",
@@ -72,7 +88,9 @@
       "date": "2025-07-06",
       "tags": [],
       "cover": "",
-      "excerpt": "Recently, I ran into a tricky problem while writing a batch script to back up folders. I needed to loop through a list of directories, set a variable like `Backup_DIR` inside that loop, and then use i..."
+      "excerpt": "Recently, I ran into a tricky problem while writing a batch script to back up folders. I needed to loop through a list of directories, set a variable like `Backup_DIR` inside that loop, and then use i...",
+      "title_zh": "批处理脚本：嵌套 For 循环为什么用不到更新后的变量，以及如何修复",
+      "excerpt_zh": "最近在写备份文件夹的批处理脚本时遇到一个棘手问题：需要先遍历一组目录，在循环里设置像 `Backup_DIR` 这样的变量，再在嵌套的 `for /r` 里用这个变量处理文件。结果内层 `for /r` 就像变量是空的一样，根本不生效。"
     }
   ]
 }

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>项目 Projects · Purple Dragon</title>
+
+  <!-- Styles: shared theme + projects page -->
+  <link rel="stylesheet" href="../css/theme.css"/>
+  <link rel="stylesheet" href="../css/projects.css"/>
+</head>
+<body class="site page-projects">
+  <!-- header/footer via include.js -->
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section" id="projects">
+    <div class="wrap">
+      <h2 class="gallery-title"><span>项目 Projects</span></h2>
+      
+      <div class="gallery-note" style="background: rgba(139, 92, 246, 0.05); border-left: 3px solid #8b5cf6; padding: 15px 20px; border-radius: 4px; margin-bottom: 20px;">
+        <p style="margin: 0 0 12px 0; color: #666;">可以按难度和技能筛选 · 也可以从 SkillTree 页面用 <code>?skill=</code> 跳转到相关项目</p>
+        <p style="margin: 5px 0; line-height: 1.6;"><strong style="color: #10b981;">Beginner（入门）</strong> — 跟着教程 / 课程一步步实现</p>
+        <p style="margin: 5px 0; line-height: 1.6;"><strong style="color: #f59e0b;"> Mid（进阶）</strong> — 在现有代码基础上做改造，完成明确的小目标</p>
+        <p style="margin: 5px 0 0 0; line-height: 1.6;"><strong style="color: #ef4444;">Advanced（进阶+）</strong> — 从需求到设计到落地的系统级项目</p>
+      </div>
+
+      <!-- Filter controls -->
+      <div class="pfilters">
+        <div class="pf-group">
+          <span class="pf-label">难度:</span>
+          <button class="chip pf-level is-active" data-level="all">全部</button>
+          <button class="chip pf-level" data-level="junior">Beginner</button>
+          <button class="chip pf-level" data-level="mid">Mid</button>
+          <button class="chip pf-level" data-level="advanced">Advanced</button>
+        </div>
+        <div class="pf-group">
+          <span class="pf-label">技能:</span>
+          <span class="pf-skill-current" data-skill="">— 未选择 —</span>
+          <button class="chip pf-clear-skill" hidden>清除</button>
+        </div>
+      </div>
+
+      <!-- Card grid: populated dynamically -->
+      <section class="pgrid" id="pgrid">
+        <p class="muted">正在加载项目列表…</p>
+      </section>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <!-- include.js loads header/footer -->
+  <script src="../js/include.js"></script>
+  
+  <!-- Firebase SDK (v9 compat mode for easier migration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  
+  <!-- Firebase configuration -->
+  <script src="../js/firebase-config.js"></script>
+  
+  <!-- Likes functionality (now with Firebase support) -->
+  <script src="../js/likes.js"></script>
+  
+  <!-- Load filtering logic first so it is ready to listen for events -->
+  <script src="../js/projects.js"></script>
+  <!-- Then load the project list script which dispatches events when ready -->
+  <script src="../js/load_projects.js"></script>
+</body>
+</html>

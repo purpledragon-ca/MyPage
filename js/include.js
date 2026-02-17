@@ -18,20 +18,41 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
 
-      // Use a template element to convert HTML to nodes, then replace
+      // Extract any <script> tags so we can execute them explicitly
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = html;
+      const scriptNodes = Array.from(wrapper.querySelectorAll("script"));
+      scriptNodes.forEach(s => s.parentNode && s.parentNode.removeChild(s));
+
+      // Use a template element to convert remaining HTML (without scripts) to nodes, then replace
       const tpl = document.createElement("template");
-      tpl.innerHTML = html;
+      tpl.innerHTML = wrapper.innerHTML;
 
       // Only replace if the element is still connected (avoid parentNode errors)
       if (el.isConnected) {
-        // Safer approach: insert before the placeholder, then remove it
-        el.insertAdjacentElement?.("beforebegin", tpl.content.firstChild ?? document.createTextNode(""));
-        // If template yields multiple root nodes, insert them sequentially
+        // Insert all nodes from the template before the placeholder
         while (tpl.content.firstChild) {
           el.parentNode.insertBefore(tpl.content.firstChild, el);
         }
         el.remove();
       }
+
+      // Execute extracted scripts in order (inline and external)
+      scriptNodes.forEach(orig => {
+        const s = document.createElement("script");
+        // Copy attributes (type, async, defer, etc.)
+        for (const attr of orig.attributes) {
+          if (attr.name === "src") continue; // handle src separately
+          s.setAttribute(attr.name, attr.value);
+        }
+        if (orig.src) {
+          s.src = orig.src;
+        } else {
+          s.textContent = orig.textContent || "";
+        }
+        // Append to body so it executes
+        document.body.appendChild(s);
+      });
     } catch (err) {
       console.error(`Include failed: ${url}`, err);
       // Optional: render the error inline for easier debugging

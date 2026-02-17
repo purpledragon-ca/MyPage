@@ -3,6 +3,25 @@
   const grid = document.getElementById('pgrid');
   if (!grid) return;
 
+  // Detect current language: page context first (URL + <html lang="zh">), then localStorage
+  function getCurrentLang(){
+    const params = new URLSearchParams(window.location.search);
+    if ((params.get('lang') || '').toLowerCase() === 'zh') return 'zh';
+    if (window.location.pathname.includes('_zh')) return 'zh';
+    // projects_zh.html has <html lang="zh"> — reliable when pathname differs (e.g. deployment)
+    const docLang = document.documentElement && document.documentElement.getAttribute('lang');
+    if (docLang && String(docLang).toLowerCase().startsWith('zh')) return 'zh';
+    try {
+      const stored = window.localStorage && localStorage.getItem('siteLang');
+      if (stored === 'zh' || stored === 'en') return stored;
+    } catch (_) {}
+    return 'en';
+  }
+  const currentLang = getCurrentLang();
+  if (typeof console !== 'undefined' && console.log) {
+    console.log('load_projects: currentLang =', currentLang);
+  }
+
   try {
     // Smart path detection based on current page location
     const currentPath = window.location.pathname;
@@ -123,8 +142,10 @@
       // Create link wrapper
       const link = document.createElement('a');
       link.className = 'pcard-link';
-      link.href = `./project_page.html?id=${project.id}`;
-      link.setAttribute('aria-label', `Open ${project.title}`);
+      const langQuery = currentLang === 'zh' ? '&lang=zh' : '';
+      link.href = `./project_page.html?id=${encodeURIComponent(project.id)}${langQuery}`;
+      const displayTitle = (currentLang === 'zh' && project.title_zh) ? project.title_zh : project.title;
+      link.setAttribute('aria-label', `Open ${displayTitle}`);
 
       // Create image container with level badge
       const thumbContainer = document.createElement('div');
@@ -157,7 +178,7 @@
       }
       
       img.src = imgSrc;
-      img.alt = `${project.title} cover`;
+      img.alt = `${displayTitle} cover`;
       img.loading = 'lazy';
       thumbContainer.appendChild(img);
 
@@ -173,16 +194,16 @@
       const body = document.createElement('div');
       body.className = 'pc-body';
 
-      // Title
+      // Title (use Chinese when on projects_zh / lang=zh and title_zh exists)
       const title = document.createElement('h3');
       title.className = 'pc-title';
-      title.textContent = project.title;
+      title.textContent = displayTitle;
       body.appendChild(title);
 
-      // Description
+      // Description (use Chinese when on projects_zh / lang=zh and description_zh exists)
       const desc = document.createElement('p');
       desc.className = 'pc-desc';
-      desc.textContent = project.description || '';
+      desc.textContent = (currentLang === 'zh' && project.description_zh) ? project.description_zh : (project.description || '');
       body.appendChild(desc);
 
       // Tags (only skill tags, level is now in top-left corner)

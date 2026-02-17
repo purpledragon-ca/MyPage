@@ -150,6 +150,19 @@ def scan_projects():
                 'pdf': fm.get('pdf', ''),
                 'sop': fm.get('sop', '')
             }
+
+            # If .zh.md exists, add Chinese title and description for projects_zh / lang=zh
+            zh_md = project_dir / f"{project_dir.name}.zh.md"
+            if zh_md.exists():
+                try:
+                    with open(zh_md, 'r', encoding='utf-8') as f:
+                        zh_content = f.read()
+                    zh_fm, zh_body = parse_yaml_frontmatter(zh_content)
+                    project['title_zh'] = zh_fm.get('title', project['title'])
+                    project['description_zh'] = zh_fm.get('description', '') or extract_description(zh_body)
+                    print(f"  + zh: OK")
+                except Exception as e:
+                    print(f"  Warning: could not read .zh.md for {project_dir.name}: {e}")
             
             projects.append(project)
             print(f"Loaded: {project_dir.name} - {fm['title']}")
@@ -179,7 +192,8 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
     
-    print(f"\nGenerated {output_file} with {len(projects)} projects")
+    zh_count = sum(1 for p in projects if p.get('title_zh') and p.get('description_zh'))
+    print(f"\nGenerated {output_file} with {len(projects)} projects ({zh_count} with title_zh + description_zh)")
 
 if __name__ == '__main__':
     main()

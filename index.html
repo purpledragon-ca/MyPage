@@ -3,9 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>Redirecting…</title>
+    <script>
+      (function(){
+        try {
+          var lang = localStorage.getItem('siteLang');
+          if (lang === 'zh') {
+            window.location.replace('./pages/hero_zh.html');
+            return;
+          }
+        } catch (_) {}
+      })();
+    </script>
     <meta http-equiv="refresh" content="0; url=./pages/hero.html">
   </head>
   <body>
-    <p>If you are not redirected, <a href="./pages/hero.html">click here</a>.</p>
+    <p>If you are not redirected, <a href="./pages/hero.html" id="fallback">click here</a>.</p>
+    <script>
+      (function(){
+        try {
+          if (localStorage.getItem('siteLang') === 'zh') {
+            var a = document.getElementById('fallback');
+            if (a) { a.href = './pages/hero_zh.html'; a.textContent = '点击这里'; }
+          }
+        } catch (_) {}
+      })();
+    </script>
   </body>
 </html>

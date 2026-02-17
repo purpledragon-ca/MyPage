@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Home · Zilong Zhao</title>
+  <title>首页 · 赵子龙</title>
   <link rel="stylesheet" href="../css/theme.css"/>
 </head>
 <body class="site">
@@ -15,23 +15,23 @@
         <article>
         
         <h1 style="margin:0;font-size:clamp(2rem,4.5vw,3.25rem);line-height:1.15">
-          I'm <span style="color:var(--primary)">Purple Dragon</span> 
-          <br>I engineer <span style="color:var(--primary-2)">Robotics & AI</span> solutions.
+          我是 <span style="color:var(--primary)">Purple Dragon</span> 
+          <br>专注于 <span style="color:var(--primary-2)">机器人 &amp; 人工智能</span> 工程实践。
         </h1>
         
         <p style="color:var(--muted); margin:0; font-size:1.2rem; line-height:1.65; max-width:80ch;">
           <br><br>
-          I'm obsessed with robots for a simple reason: I want one could finally help me clean my room.
+          我一直对机器人着迷，一个很简单的原因：我真心希望有一天，能有一个机器人帮我把房间打扫干净。
           <br><br>
-          To get there, I've gone deep on the essentials: solid programming, a wide range of deep-learning methods, and a sturdy robotics foundation.
-          I'm already building my own bots—still learning, still improving—and getting closer to the day I never have to pick up stray wrappers again.
+          为了离这个目标更近一点，我在打基础：扎实的编程能力、多种深度学习方法的实践，以及稳固的机器人学基础。
+          现在我已经在自己造机器人——一边踩坑一边进步，慢慢接近那个「不用再捡地上垃圾」的未来。
           <br><br>
-          Around this site you'll find my 
-          <a class="link-cta" href="./projects.html"><strong>Projects</strong><span class="icon"></span></a>
-          and a clickable 
-          <a class="link-cta" href="./skills.html"><strong>Skill Tree</strong><span class="icon"></span></a>, 
-          organized by level (Beginner, Mid, Advanced). 
-          Tap any skill to jump straight to the projects that use it.
+          在这个站点，你可以看到我的
+          <a class="link-cta" href="./projects_zh.html"><strong>项目 Projects</strong><span class="icon"></span></a>
+          ，以及一棵可点击的
+          <a class="link-cta" href="./skills.html"><strong>技能树 Skill Tree</strong><span class="icon"></span></a>，
+          按照难度（入门、进阶、进阶+）来组织。
+          点击任何一个技能，都可以直接跳到相关的项目。
         </p>
 
         <br><br>
@@ -42,14 +42,14 @@
   </main>
   <script>
     (async function(){
-      // Detect current language for gallery links: prefer global setting
-      let isZh = false;
+      // 检测当前语言：优先使用全局设置
+      let isZh = true;
       try{
         const stored = window.localStorage && localStorage.getItem('siteLang');
-        if (stored === 'zh') {
-          isZh = true;
-        } else if (stored === 'en') {
+        if (stored === 'en') {
           isZh = false;
+        } else if (stored === 'zh') {
+          isZh = true;
         } else {
           const params = new URLSearchParams(window.location.search);
           const qp = (params.get('lang') || '').toLowerCase();
@@ -191,8 +191,8 @@
         // Show error message to user
         grid.innerHTML = `
           <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted);">
-            <p style="color: #ef4444;">⚠️ Failed to load projects</p>
-            <p style="font-size: 0.9rem;">Check console (F12) for details</p>
+            <p style="color: #ef4444;">⚠️ 项目加载失败</p>
+            <p style="font-size: 0.9rem;">请打开控制台 (F12) 查看详情</p>
             <p style="font-size: 0.85rem; margin-top: 10px;">Error: ${error.message}</p>
           </div>
         `;

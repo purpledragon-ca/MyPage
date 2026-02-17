@@ -69,6 +69,35 @@
     transform: translateY(-1px);
   }
   .menu a:hover::after { opacity: 1; transform: scaleX(1); }
+
+/* Language switcher: EN / 中文, same visual size, fully clickable */
+.nav-lang{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-left:12px;
+}
+.nav-lang-btn{
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:28px;
+  min-width:44px;
+  padding:0 .6rem;
+  font-size:.8rem;
+  line-height:1;
+  border-radius:999px;
+  border:1px solid var(--outline);
+  background:rgba(0,0,0,.15);
+  color:var(--muted);
+}
+.nav-lang-btn.is-active{
+  background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  color:#fff;
+  box-shadow:var(--glow);
+  border-color:#5f33cc;
+}
   
   /* 若你想标记当前页：在对应 <a> 加 aria-current="page" */
   .menu a[aria-current="page"] {
@@ -88,6 +117,7 @@
     }
     .menu::-webkit-scrollbar { display: none; }
     .menu a:not(:first-child)::before { height: 12px; left: -7px; }
+    .nav-lang{ margin-left:4px; }
   }
   
   

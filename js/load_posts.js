@@ -8,6 +8,21 @@
   let allPosts = [];
   let q = '';
 
+  // Detect current language: page context first (URL + <html lang="zh">), then localStorage (same as load_projects.js)
+  function getCurrentLang(){
+    const params = new URLSearchParams(window.location.search);
+    if ((params.get('lang') || '').toLowerCase() === 'zh') return 'zh';
+    if (window.location.pathname.includes('_zh')) return 'zh';
+    const docLang = document.documentElement && document.documentElement.getAttribute('lang');
+    if (docLang && String(docLang).toLowerCase().startsWith('zh')) return 'zh';
+    try {
+      const stored = window.localStorage && localStorage.getItem('siteLang');
+      if (stored === 'zh' || stored === 'en') return stored;
+    } catch (_) {}
+    return 'en';
+  }
+  const currentLang = getCurrentLang();
+
   function render(posts){
     if(!posts.length){
       list.innerHTML = '<p class="muted">No posts found.</p>';
@@ -15,14 +30,17 @@
     }
     const frag = document.createDocumentFragment();
     posts.forEach(p => {
+      const displayTitle = (currentLang === 'zh' && p.title_zh) ? p.title_zh : p.title;
+      const displayExcerpt = (currentLang === 'zh' && p.excerpt_zh) ? p.excerpt_zh : (p.excerpt || '');
       const art = document.createElement('article');
       art.className = 'post-card panel';
       art.style.padding = '16px';
+      const langQuery = currentLang === 'zh' ? '&lang=zh' : '';
       art.innerHTML = `
-        <a class="post-link" href="./post_page.html?id=${encodeURIComponent(p.id)}" style="color:inherit;text-decoration:none">
-          <h3 style="margin:.2rem 0 .25rem; font-size:1.15rem">${escapeHTML(p.title)}</h3>
+        <a class="post-link" href="./post_page.html?id=${encodeURIComponent(p.id)}${langQuery}" style="color:inherit;text-decoration:none">
+          <h3 style="margin:.2rem 0 .25rem; font-size:1.15rem">${escapeHTML(displayTitle)}</h3>
           <div class="muted" style="font-size:.9rem;margin-bottom:.5rem">${escapeHTML(p.date)}${renderTags(p.tags)}</div>
-          <p class="post-excerpt" style="margin:0;color:var(--muted)">${escapeHTML(p.excerpt || '')}</p>
+          <p class="post-excerpt" style="margin:0;color:var(--muted)">${escapeHTML(displayExcerpt)}</p>
         </a>
       `;
       frag.appendChild(art);
@@ -42,11 +60,15 @@
 
   function apply(){
     const n = q.trim().toLowerCase();
-    const filtered = n ? allPosts.filter(p =>
-      (p.title||'').toLowerCase().includes(n) ||
-      (p.excerpt||'').toLowerCase().includes(n) ||
-      (Array.isArray(p.tags) ? p.tags.join(',').toLowerCase().includes(n) : false)
-    ) : allPosts.slice();
+    const filtered = n ? allPosts.filter(p => {
+      const title = (currentLang === 'zh' && p.title_zh) ? p.title_zh : (p.title || '');
+      const excerpt = (currentLang === 'zh' && p.excerpt_zh) ? p.excerpt_zh : (p.excerpt || '');
+      return title.toLowerCase().includes(n) ||
+        excerpt.toLowerCase().includes(n) ||
+        (p.title_zh || '').toLowerCase().includes(n) ||
+        (p.excerpt_zh || '').toLowerCase().includes(n) ||
+        (Array.isArray(p.tags) ? p.tags.join(',').toLowerCase().includes(n) : false);
+    }) : allPosts.slice();
     // Sort by date desc (manifest already sorted, but keep stable)
     filtered.sort((a,b)=> String(b.date).localeCompare(String(a.date)));
     render(filtered);

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>工具 &amp; 小应用 · 赵子龙</title>
+  <link rel="stylesheet" href="../css/theme.css"/>
+  <style>
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 24px; }
+    .tool-card { background: var(--panel); border: 1px solid var(--outline); border-radius: var(--radius); padding: 24px; transition: all 0.3s; }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2); border-color: var(--primary); }
+    .tool-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .tool-title { font-size: 1.3rem; font-weight: 600; margin: 0 0 8px 0; color: var(--ink); }
+    .tool-desc { color: var(--muted); line-height: 1.6; margin-bottom: 16px; font-size: 0.95rem; }
+    .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .tool-link { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: white; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.2s; }
+    .tool-link:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); }
+  </style>
+</head>
+<body class="site">
+  <div data-include="../partials/header.html"></div>
+
+  <main class="section" id="tools">
+    <div class="wrap">
+      <h2 class="gallery-title"><span>工具 &amp; 小应用</span></h2>
+      <p class="muted" style="margin-bottom: 32px;">一些我和我妻子 Lei Huang 一起做的小工具 / Web 应用，方便自己也希望能帮到别人。</p>
+      
+      <div class="tools-grid">
+        
+        <!-- Bank Statement Analyzer -->
+        <div class="tool-card">
+          <div class="tool-icon">🏦</div>
+          <h3 class="tool-title">银行流水分析器（Bank Statement Analyzer）</h3>
+          <p class="tool-desc">从 PDF 银行流水中提取记录、自动分类、统计趋势并可视化消费情况。支持接入 DeepSeek / OpenAI 做智能分类和分析，所有数据都在本地浏览器中处理。</p>
+          <div class="tool-tags">
+            <span class="chip">JavaScript</span>
+            <span class="chip">AI Integration</span>
+            <span class="chip">PDF Analysis</span>
+            <span class="chip">Visualization</span>
+          </div>
+          <a href="https://purpledragon-ca.github.io/Bank_Statement_Analyzer/" target="_blank" rel="noopener" class="tool-link">打开应用 →</a>
+        </div>
+
+        <!-- PDF Toolbox -->
+        <div class="tool-card">
+          <div class="tool-icon">📄</div>
+          <h3 class="tool-title">PDF 工具箱（PDF Toolbox）</h3>
+          <p class="tool-desc">轻量级 PDF 工具，支持拖拽导入，在浏览器中完成阅读、合并、拆分、重排、旋转、加密以及基础元数据编辑。所有处理都在本地完成，更安全也更隐私。</p>
+          <div class="tool-tags">
+            <span class="chip">JavaScript</span>
+            <span class="chip">PDF.js</span>
+            <span class="chip">Client-side</span>
+            <span class="chip">Privacy-focused</span>
+          </div>
+          <a href="https://purpledragon-ca.github.io/pdf_editor/" target="_blank" rel="noopener" class="tool-link">打开应用 →</a>
+        </div>
+        
+      </div>
+    </div>
+  </main>
+
+  <div data-include="../partials/footer.html"></div>
+  <script src="../js/include.js"></script>
+</body>
+</html>

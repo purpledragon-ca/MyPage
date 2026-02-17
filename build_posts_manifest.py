@@ -1,7 +1,14 @@
 # build_posts_manifest.py
 # Scan ./_posts and generate ./_posts/manifest.json with post metadata
-import os, json, re
+import os, json, re, sys
 from pathlib import Path
+
+# Avoid Windows console encoding errors when printing
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
 
 ROOT = Path(__file__).parent
 POSTS_DIR = ROOT / "_posts"
@@ -90,8 +97,20 @@ def scan_posts():
                 'cover': cover,
                 'excerpt': excerpt
             }
+            # If .zh.md exists, add Chinese title and excerpt for writing_zh / lang=zh
+            zh_md = post_dir / f"{post_dir.name}.zh.md"
+            if zh_md.exists():
+                try:
+                    zh_text = zh_md.read_text(encoding='utf-8')
+                    zh_fm, zh_body = parse_front_matter(zh_text)
+                    post['title_zh'] = zh_fm.get('title', post['title'])
+                    post['excerpt_zh'] = zh_fm.get('excerpt', '') or extract_excerpt(zh_body)
+                    print(f"  + zh: OK")
+                except Exception as e:
+                    print(f"  Warning: could not read .zh.md for {post_dir.name}: {e}")
             posts.append(post)
-            print(f"Loaded post: {post_dir.name} - {fm['title']}")
+            # Avoid printing title to prevent Windows console encoding errors
+            print(f"Loaded post: {post_dir.name}")
         except Exception as e:
             print(f"Error processing {post_dir.name}: {e}")
             continue
@@ -112,7 +131,8 @@ def main():
     out = POSTS_DIR / 'manifest.json'
     with out.open('w', encoding='utf-8') as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
-    print(f"Generated {out} with {len(posts)} posts")
+    zh_count = sum(1 for p in posts if p.get('title_zh') and p.get('excerpt_zh'))
+    print(f"Generated {out} with {len(posts)} posts ({zh_count} with title_zh + excerpt_zh)")
 
 if __name__ == '__main__':
     main()

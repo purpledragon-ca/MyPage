@@ -2,8 +2,8 @@
 
 <nav class="nav">
   <div class="wrap inner">
-    <!-- Brand: clicking returns to Home -->
-    <a class="brand" href="./hero.html" aria-label="Home">
+    <!-- Brand: href 随全局语言指向 hero / hero_zh -->
+    <a class="brand nav-link-lang" href="./hero.html" data-page="hero" aria-label="Home">
       <img class="brand-logo" src="../assets/logo.jpg" alt="" aria-hidden="true">
       <strong>PurpleDragon</strong>
     </a>
@@ -13,22 +13,132 @@
 
     <!-- Menu: relative paths ./xxx.html -->
     <div class="menu" role="navigation" aria-label="Primary">
-      <a href="./hero.html">Home</a>
-      <a href="./projects.html">Projects</a>
-      <a href="./skills.html">Skill&nbsp;Tree</a>
-      <a href="./writing.html">Blogs</a>
-      <a href="./tools.html">Tools</a>
-      <a href="./wedding.html">Wedding</a>
+      <a class="nav-link-lang" href="./hero.html" data-page="hero" data-en="Home" data-zh="首页">Home</a>
+      <a class="nav-link-lang" href="./projects.html" data-page="projects" data-en="Projects" data-zh="项目">Projects</a>
+      <a class="nav-link-lang" href="./skills.html" data-page="skills" data-en="Skill Tree" data-zh="技能树">Skill&nbsp;Tree</a>
+      <a class="nav-link-lang" href="./writing.html" data-page="writing" data-en="Blogs" data-zh="博客">Blogs</a>
+      <a class="nav-link-lang" href="./tools.html" data-page="tools" data-en="Tools" data-zh="工具">Tools</a>
+      <a class="nav-link-lang" href="./wedding.html" data-page="wedding" data-en="Wedding" data-zh="婚礼">Wedding</a>
+      <!-- Language switcher -->
+      <div class="nav-lang" aria-label="Language switcher">
+        <button type="button" class="chip nav-lang-btn" data-lang="en">EN</button>
+        <button type="button" class="chip nav-lang-btn" data-lang="zh">中文</button>
+      </div>
     </div>
   </div>
 </nav>
 
 <script>
-  // Toggle shadow when page scrolls
   (function(){
     const nav = document.querySelector('.nav');
     const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 2);
     onScroll();
     window.addEventListener('scroll', onScroll, {passive:true});
+
+    // -------- Language switcher (EN / 中文) ----------
+    const langButtons = document.querySelectorAll('.nav-lang-btn');
+    if (!langButtons.length) return;
+
+    function getCurrentLang() {
+      // 1) Current page URL wins (so *_zh.html / ?lang=zh always show Chinese nav and links)
+      const params = new URLSearchParams(window.location.search);
+      const qp = (params.get('lang') || '').toLowerCase();
+      if (qp === 'zh') return 'zh';
+      if (window.location.pathname.includes('_zh')) return 'zh';
+      // 2) Else use global setting
+      try {
+        const stored = window.localStorage && localStorage.getItem('siteLang');
+        if (stored === 'zh' || stored === 'en') return stored;
+      } catch (_) {}
+      return 'en';
+    }
+
+    function updateActiveLang() {
+      const current = getCurrentLang();
+      langButtons.forEach(btn => {
+        const v = btn.getAttribute('data-lang');
+        btn.classList.toggle('is-active', v === current);
+        btn.setAttribute('aria-pressed', v === current ? 'true' : 'false');
+      });
+      applyMenuLang(current);
+    }
+
+    // 有中文版的页面（对应 *_zh.html）
+    const PAGES_WITH_ZH = ['hero', 'projects', 'writing', 'tools', 'skills'];
+
+    function applyMenuLang(current){
+      const isZh = current === 'zh';
+      const links = document.querySelectorAll('.nav-link-lang[data-page]');
+      links.forEach(a => {
+        const page = a.getAttribute('data-page');
+        if (page) {
+          const useZh = isZh && PAGES_WITH_ZH.includes(page);
+          a.href = `./${page}${useZh ? '_zh' : ''}.html`;
+        }
+        const en = a.getAttribute('data-en');
+        const zh = a.getAttribute('data-zh');
+        if (isZh && zh) {
+          a.textContent = zh;
+        } else if (!isZh && en) {
+          a.textContent = en;
+        }
+      });
+    }
+
+    function switchLang(targetLang) {
+      // Persist global language preference
+      try {
+        if (targetLang === 'zh' || targetLang === 'en') {
+          localStorage.setItem('siteLang', targetLang);
+        }
+      } catch (_) {}
+
+      const url = new URL(window.location.href);
+      const path = url.pathname;
+
+      // Detail pages use ?lang=...
+      if (path.endsWith('/post_page.html') || path.endsWith('/project_page.html')) {
+        if (targetLang === 'zh') {
+          url.searchParams.set('lang', 'zh');
+        } else {
+          url.searchParams.delete('lang');
+        }
+        window.location.href = url.toString();
+        return;
+      }
+
+      // Static pages: use *_zh.html naming convention under /pages/
+      const match = path.match(/^(.*\/)([^\/]+)\.html$/);
+      if (match) {
+        const dir = match[1];
+        let name = match[2];
+
+        const isZhPage = name.endsWith('_zh');
+
+        if (targetLang === 'zh' && !isZhPage) {
+          name = name + '_zh';
+        } else if (targetLang === 'en' && isZhPage) {
+          name = name.replace(/_zh$/, '');
+        }
+
+        const newPath = dir + name + '.html';
+        url.pathname = newPath;
+
+        // For static pages, we don't need ?lang=... in most cases
+        url.searchParams.delete('lang');
+
+        window.location.href = url.toString();
+        return;
+      }
+    }
+
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', function(){
+        const target = this.getAttribute('data-lang');
+        switchLang(target);
+      });
+    });
+
+    updateActiveLang();
   })();
 </script>

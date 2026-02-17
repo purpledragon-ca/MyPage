@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "version": "20251129_221606",
+  "version": "20260217_010620",
   "count": 11,
   "projects": [
     {
@@ -21,7 +21,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "基于视觉的平面损伤分割与激光熔覆路径规划系统",
+      "description_zh": "搭建了从相机图像到 ABB/FANUC 机器人代码的视觉驱动系统，完成二维平面损伤分割与自动激光熔覆路径规划。"
     },
     {
       "id": "so101-lift-cube",
@@ -41,7 +43,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "SO101 · 托举方块（Isaac Lab 强化学习）",
+      "description_zh": "在 Isaac Lab（manager-based 环境）中为 SO101 夹爪训练了抓取并托举方块的 RL 策略。"
     },
     {
       "id": "april_tag_accuracy_test",
@@ -60,7 +64,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "送餐机器人 AprilTag 红外定位精度测试",
+      "description_zh": "基于 AprilTag 的餐厅送餐机器人位姿精度测试，采用 **红外增强 AprilTag 感知方案**，在真实光照与杂乱场景下实现稳定定位。"
     },
     {
       "id": "image2usd",
@@ -77,7 +83,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "image2usd",
+      "description_zh": "将二维图像转为可直接在 Isaac Sim 中使用的 3D USD 资产。"
     },
     {
       "id": "amainghand_ros2",
@@ -93,7 +101,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "基于 ROS2 的 AmazingHand 键盘控制",
+      "description_zh": "ROS2 包，复现并暴露原有 `AmazingHand_Demo.py` 的手势，支持键盘控制。"
     },
     {
       "id": "visual-tactile sensor",
@@ -112,7 +122,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "视觉–触觉传感器抓取",
+      "description_zh": "将单目 6D 位姿估计与 **GelSight Mini** 指尖触觉传感结合，检测打滑、表面纹理与接触变形，实现鲁棒抓取。"
     },
     {
       "id": "leg_tracker",
@@ -130,7 +142,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "基于 2D 激光雷达的人腿跟踪",
+      "description_zh": "在移动机器人上使用 2D 激光雷达与 ROS leg_tracker 流程实现行人跟踪与防撞。"
     },
     {
       "id": "moveit_isaacsim",
@@ -149,7 +163,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "SO-ARM101 在 Isaac Sim 中的 MoveIt 控制",
+      "description_zh": "使用 MoveIt + ROS 2 控制 SO-ARM101 机械臂，并通过基于 topic 的 ros2_control 与 Isaac Sim 连接。"
     },
     {
       "id": "camera_lidar_calibration",
@@ -168,7 +184,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": "assets/SOPCamaserCalibraTool.docx"
+      "sop": "assets/SOPCamaserCalibraTool.docx",
+      "title_zh": "相机与 2D 激光雷达联合标定",
+      "description_zh": "复现 GitHub 上的相机–激光雷达标定方法，适配到相机 + 2D 激光雷达方案，并整理为内部 SOP 文档。"
     },
     {
       "id": "so101_teleoperation",
@@ -185,7 +203,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "SO101 遥操作",
+      "description_zh": "使用 SO100 遥操作 SO101 机械臂。"
     },
     {
       "id": "yolo-v8-mobile",
@@ -201,7 +221,9 @@
       "repo": "",
       "demo": "",
       "pdf": "",
-      "sop": ""
+      "sop": "",
+      "title_zh": "YOLOv8 移动端演示",
+      "description_zh": "在移动设备上实时运行的轻量级 YOLOv8 目标检测演示。"
     }
   ]
 }

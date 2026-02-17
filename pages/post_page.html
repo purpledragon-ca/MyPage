@@ -58,6 +58,21 @@
     const params = new URLSearchParams(location.search);
     const idRaw = params.get('id') || '';
     const id = String(idRaw).toLowerCase().trim();
+
+    // Determine language: prefer global setting, then ?lang=, then default en
+    let lang = 'en';
+    try{
+      const stored = window.localStorage && localStorage.getItem('siteLang');
+      if (stored === 'zh' || stored === 'en') {
+        lang = stored;
+      } else {
+        const langParam = (params.get('lang') || '').toLowerCase();
+        if (langParam === 'zh') lang = 'zh';
+      }
+    }catch(_){
+      const langParam = (params.get('lang') || '').toLowerCase();
+      if (langParam === 'zh') lang = 'zh';
+    }
     if(!id){ document.getElementById('md-out').innerHTML = '<p class="muted">Missing id.</p>'; return; }
     
     // Smart path detection based on current location
@@ -68,9 +83,11 @@
     console.log('📍 Current path:', currentPath);
     console.log('📂 Base path:', basePath);
 
-    // Fetch markdown <id>.md (fallback to any .md)
+    // Fetch markdown <id>.md (or <id>.zh.md when lang=zh, fallback to any .md)
     let raw = '';
-    let mdURL = `${basePath}${id}.md`;
+    let mdURL = '';
+    const primaryName = lang === 'zh' ? `${id}.zh.md` : `${id}.md`;
+    mdURL = `${basePath}${primaryName}`;
     console.log('  Trying:', mdURL);
     
     try{
@@ -86,7 +103,8 @@
       let ok = false;
       for(const n of tryNames){
         try{
-          const u = `${basePath}${n}.md`;
+          const nameWithLang = lang === 'zh' ? `${n}.zh.md` : `${n}.md`;
+          const u = `${basePath}${nameWithLang}`;
           console.log('  Trying fallback:', u);
           const r = await fetch(u, { cache: 'no-store' });
           if(r.ok){ 

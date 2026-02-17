@@ -106,6 +106,21 @@
       const params = new URLSearchParams(location.search);
       const idRaw = params.get('id') || 'minist-cnn';      // Read project ID from URL param
       const id = idRaw.toLowerCase().trim();               // Normalize casing/whitespace
+
+      // Determine language: prefer global setting, then ?lang=, then default en
+      let lang = 'en';
+      try{
+        const stored = window.localStorage && localStorage.getItem('siteLang');
+        if (stored === 'zh' || stored === 'en') {
+          lang = stored;
+        } else {
+          const langParam = (params.get('lang') || '').toLowerCase();
+          if (langParam === 'zh') lang = 'zh';
+        }
+      }catch(_){
+        const langParam = (params.get('lang') || '').toLowerCase();
+        if (langParam === 'zh') lang = 'zh';
+      }
       
       // Smart path detection - try multiple base paths
       const currentPath = window.location.pathname;
@@ -130,7 +145,7 @@
       console.log('📍 Current location:', currentPath);
       console.log('🛤️  Base paths to try:', uniqueBasePaths);
       
-      // Smart lookup: try <id>.md first, then fall back to other markdown names
+      // Smart lookup: try <id>.md (or <id>.zh.md when lang=zh) first, then fall back to other markdown names
       let mdURL = '';
       let raw = '';
       let found = false;
@@ -138,7 +153,8 @@
       
       // Step 1: attempt the canonical name <id>.md for each base path
       for (const basePath of uniqueBasePaths) {
-        mdURL = `${basePath}${id}.md`;
+        const primaryName = lang === 'zh' ? `${id}.zh.md` : `${id}.md`;
+        mdURL = `${basePath}${primaryName}`;
         console.log(`  Trying: ${mdURL}`);
         try {
           const r = await fetch(mdURL, {cache:'no-store'});
@@ -167,7 +183,8 @@
         for (const basePath of uniqueBasePaths) {
           for (const variant of variants) {
             if (variant === id) continue; // Already attempted
-            mdURL = `${basePath}${variant}.md`;
+            const primaryName = lang === 'zh' ? `${variant}.zh.md` : `${variant}.md`;
+            mdURL = `${basePath}${primaryName}`;
             console.log(`  Trying variant: ${mdURL}`);
             try {
               const r = await fetch(mdURL, {cache:'no-store'});
