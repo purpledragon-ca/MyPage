@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20260217_010620",
-  "count": 11,
+  "version": "20260219_132117",
+  "count": 12,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -187,6 +187,26 @@
       "sop": "assets/SOPCamaserCalibraTool.docx",
       "title_zh": "相机与 2D 激光雷达联合标定",
       "description_zh": "复现 GitHub 上的相机–激光雷达标定方法，适配到相机 + 2D 激光雷达方案，并整理为内部 SOP 文档。"
+    },
+    {
+      "id": "so101_imitation_learning",
+      "title": "SO101 Imitation Learning — Lift Cube to Plate",
+      "level": "junior",
+      "tags": [
+        "so101",
+        "lerobot",
+        "il"
+      ],
+      "skills": "so101,lerobot,il",
+      "cover": "assets/coverpage.png",
+      "description": "Use the SO101 robot arm for imitation learning: teleoperate to collect trajectories, then train a policy so the arm autonomously lifts a cube and places it on a plate.",
+      "order": 107,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": "",
+      "title_zh": "SO101 模仿学习：托举方块到托盘",
+      "description_zh": "使用 SO101 机械臂做模仿学习：先遥操作采集轨迹，再训练策略，使机械臂自主完成将方块托举到托盘上的任务。"
     },
     {
       "id": "so101_teleoperation",
