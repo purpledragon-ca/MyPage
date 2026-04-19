@@ -1,7 +1,7 @@
 {
   "generated": true,
-  "version": "20260225_095659",
-  "count": 12,
+  "version": "20260420_022744",
+  "count": 13,
   "projects": [
     {
       "id": "laser_clading_system",
@@ -145,6 +145,27 @@
       "sop": "",
       "title_zh": "基于 2D 激光雷达的人腿跟踪",
       "description_zh": "在移动机器人上使用 2D 激光雷达与 ROS leg_tracker 流程实现行人跟踪与防撞。"
+    },
+    {
+      "id": "isaac_moveit_recorder",
+      "title": "Isaac Sim / MoveIt Command and Observation Recorder",
+      "level": "mid",
+      "tags": [
+        "ROS2",
+        "MoveIt",
+        "IsaacSim",
+        "Data Visualization"
+      ],
+      "skills": "ros2,moveit,isaacsim,data visualization",
+      "cover": "assets/coverpage.png",
+      "description": "A recording and visualization tool for comparing MoveIt joint commands with Isaac Sim observed joint positions.",
+      "order": 103,
+      "repo": "",
+      "demo": "",
+      "pdf": "",
+      "sop": "",
+      "title_zh": "Isaac Sim / MoveIt 指令与观测记录程序",
+      "description_zh": "我写了一个记录和可视化程序，用来同时记录 MoveIt 下发的关节指令和 Isaac Sim 返回的关节观测位置，帮助定位机械臂仿真轨迹和现实轨迹不一致的问题。"
     },
     {
       "id": "moveit_isaacsim",

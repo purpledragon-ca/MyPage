@@ -1,7 +1,37 @@
 {
   "generated": true,
-  "count": 9,
+  "count": 11,
   "posts": [
+    {
+      "id": "2026-04-20-isaacsim-physics-params",
+      "title": "Isaac Sim Physics Parameters: A Practical Summary",
+      "date": "2026-04-20",
+      "tags": [
+        "IsaacSim",
+        "PhysX",
+        "Physics",
+        "Tuning"
+      ],
+      "cover": "",
+      "excerpt": "This post is a practical summary of commonly used Isaac Sim rigid-body parameters. The main idea is simple: separate parameters for motion damping, sleep and stabilization, collision robustness, and s...",
+      "title_zh": "Isaac Sim 常用物理参数总结",
+      "excerpt_zh": "这篇文章整理的是我在 Isaac Sim 里常见、也最容易混淆的一批物理参数。它们大多出现在 `DynamicCuboid`、`DynamicCylinder` 这类带刚体的物体上，核心可以分成三类：让运动更稳定、让仿真更省、以及一些通常不需要频繁改的高级项。"
+    },
+    {
+      "id": "2026-03-31-isaac-moveit-timebase",
+      "title": "Why Isaac Sim Looked Slower Than MoveIt",
+      "date": "2026-03-31",
+      "tags": [
+        "ROS2",
+        "MoveIt",
+        "IsaacSim",
+        "Debugging"
+      ],
+      "cover": "assets/cmd-vs-obs.png",
+      "excerpt": "While comparing a robot arm trajectory in simulation and the real world, I found that the motion in Isaac Sim did not match what MoveIt was commanding.",
+      "title_zh": "我找到了 Isaac Sim 比 MoveIt 慢的原因",
+      "excerpt_zh": "这篇记录的是我在 2026-03-31 发现的一个问题：机械臂的运动轨迹在 Isaac Sim 仿真里表现出来的结果，和现实中、以及 MoveIt 指令中的预期不一致。"
+    },
     {
       "id": "2025-10-17-title-post",
       "title": "Tune Isaac Sim Joint Parameters Step-by-Step (Damping, Stiffness, Max force)",
